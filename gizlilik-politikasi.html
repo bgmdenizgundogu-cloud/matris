@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Gizlilik Politikası — Destiny Chart Matrix</title>
+<meta name="description" id="pageDesc" content="Destiny Chart Matrix gizlilik ve çerez politikası.">
+<link rel="icon" href="assets/app-icon.svg" type="image/svg+xml">
+<style>
+  :root {
+    --ink: #122a4d;
+    --muted: #4d6d8f;
+    --bg: #e7f2fb;
+    --panel: #ffffff;
+    --gold: #2f6fae;
+    --gold-light: #a9cfe9;
+    --gold-deep: #12365e;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+  }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .back-link {
+    color: var(--gold-deep);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .back-link:hover { text-decoration: underline; }
+  .lang-toggle-btn {
+    background: var(--panel);
+    border: 1.5px solid var(--gold);
+    color: var(--gold-deep);
+    font-weight: 700;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  .lang-toggle-btn:hover { background: var(--gold-light); }
+  .panel {
+    background: var(--panel);
+    border-radius: 16px;
+    padding: 36px 40px;
+    box-shadow: 0 4px 24px rgba(18,54,94,0.08);
+  }
+  h1 {
+    font-size: 28px;
+    color: var(--gold-deep);
+    margin: 0 0 8px;
+  }
+  .updated {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+  h4 {
+    color: var(--gold-deep);
+    font-size: 18px;
+    margin: 28px 0 10px;
+  }
+  h4:first-of-type { margin-top: 0; }
+  p {
+    color: #2b3a52;
+    font-size: 15.5px;
+    margin: 0 0 14px;
+  }
+  strong { color: var(--ink); }
+  a { color: var(--gold); }
+  footer {
+    text-align: center;
+    margin-top: 32px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  [data-lang="en"] { display: none; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top-bar">
+      <a class="back-link" id="backLink" href="/">&larr; Ana Sayfaya Dön</a>
+      <button class="lang-toggle-btn" id="langBtn" onclick="toggleLang()">EN</button>
+    </div>
+    <div class="panel">
+      <h1 id="pageH1">Gizlilik Politikası</h1>
+      <div class="updated" id="updatedText">Son güncelleme: Ağustos 2026</div>
+      <div data-lang="tr">
+        <h4>1. Topladığımız Bilgiler</h4><p>Destiny Chart Matrix'e kayıt olduğunuzda e-posta adresinizi ve şifrenizi (şifrelenmiş olarak) toplarız. Analiz Matrisi hesaplaması yaptığınızda girdiğiniz doğum tarihi bilgisi, hesabınıza bağlıysa kaydedilebilir. Ödeme sağlayıcımız üzerinden bir satın alma yaptığınızda, ödeme bilgileriniz doğrudan ödeme sağlayıcımız tarafından işlenir; kart bilgilerinizi biz hiçbir zaman görmez veya saklamayız.</p><h4>2. Bilgilerinizi Nasıl Kullanırız</h4><p>Toplanan bilgiler yalnızca: hesabınızı oluşturmak ve oturumunuzu güvenli şekilde açık tutmak, satın aldığınız içeriklere erişiminizi sağlamak, size hizmetle ilgili önemli bildirimler göndermek ve platformu geliştirmek amacıyla kullanılır. Bilgileriniz üçüncü taraflara satılmaz.</p><h4>3. Çerez Politikası (Cookie Policy)</h4><p>Sitemiz, deneyiminizi sağlıklı ve güvenli şekilde sunabilmek için sınırlı sayıda çerez (cookie) ve benzeri teknolojiler (yerel depolama / localStorage) kullanır:</p><p><strong>Oturum ve Kimlik Doğrulama Çerezleri:</strong> Giriş yaptığınızda, oturumunuzun açık kalmasını sağlamak ve sayfayı yenilediğinizde tekrar giriş yapmanızı önlemek için kimlik doğrulama sağlayıcımız (Supabase) tarafından zorunlu çerezler/token'lar kullanılır. Bu çerezler olmadan hesabınıza giriş yapılı kalamazsınız.</p><p><strong>Güvenli Ödeme Çerezleri:</strong> Satın alma işlemi sırasında ödeme sağlayıcımız dolandırıcılığı önlemek, ödemenizi güvenli şekilde işlemek ve satın alma durumunuzu doğrulamak amacıyla kendi çerezlerini kullanabilir. Bu çerezler ödeme sağlayıcımızın gizlilik politikasına tabidir.</p><p><strong>Tercih ve Performans Bilgileri:</strong> Dil tercihiniz (TR/EN) ve kilidini açtığınız içerikler gibi bilgiler, deneyiminizi kişiselleştirmek için tarayıcınızın yerel depolamasında (localStorage) saklanır; bu bilgiler sunucularımıza gönderilmez.</p><p>Tarayıcı ayarlarınızdan çerezleri engelleyebilir veya silebilirsiniz; ancak bu durumda oturum açma ve satın alma gibi temel özellikler düzgün çalışmayabilir.</p><h4>4. Üçüncü Taraf Hizmetler</h4><p>Platformumuz; kimlik doğrulama için Supabase, ödeme işlemleri için ödeme sağlayıcımız ve barındırma için Netlify gibi güvenilir üçüncü taraf hizmet sağlayıcılarını kullanır. Bu sağlayıcıların kendi gizlilik politikaları geçerlidir.</p><h4>5. Haklarınız</h4><p>Hesabınızla ilişkili verilerinize erişme, bunları düzeltme veya hesabınızın ve ilişkili verilerin tamamen silinmesini talep etme hakkına sahipsiniz. Talepleriniz için İletişim bölümünde belirtilen adresten bize ulaşabilirsiniz.</p><h4>6. Değişiklikler</h4><p>Bu gizlilik politikası zaman zaman güncellenebilir. Önemli değişiklikler bu sayfada yayınlanacaktır.</p>
+      </div>
+      <div data-lang="en">
+        <h4>1. Information We Collect</h4><p>When you register with Destiny Chart Matrix, we collect your email address and password (stored encrypted). The birth date information you enter when running a Destiny Matrix calculation may be saved if it's linked to your account. When you make a purchase through our payment provider, your payment information is processed directly by them; we never see or store your card details.</p><h4>2. How We Use Your Information</h4><p>The information collected is used only to: create your account and keep your session securely signed in, give you access to content you've purchased, send you important service-related notifications, and improve the platform. Your information is not sold to third parties.</p><h4>3. Cookie Policy</h4><p>Our site uses a limited number of cookies and similar technologies (local storage) to provide a healthy and secure experience:</p><p><strong>Session and Authentication Cookies:</strong> When you sign in, our authentication provider (Supabase) uses necessary cookies/tokens to keep your session active and to prevent you from having to sign in again when you refresh the page. Without these cookies, you cannot remain signed in to your account.</p><p><strong>Secure Payment Cookies:</strong> During checkout, our payment provider may use its own cookies to prevent fraud, process your payment securely, and verify your purchase status. These cookies are subject to our payment provider's own privacy policy.</p><p><strong>Preference and Performance Information:</strong> Information such as your language preference (TR/EN) and the content you've unlocked is stored in your browser's local storage to personalize your experience; this information is not sent to our servers.</p><p>You can block or delete cookies from your browser settings; however, essential features such as signing in and making purchases may not work correctly if you do so.</p><h4>4. Third-Party Services</h4><p>Our platform uses trusted third-party service providers, including Supabase for authentication, our payment provider for payment processing, and Netlify for hosting. These providers' own privacy policies apply.</p><h4>5. Your Rights</h4><p>You have the right to access, correct, or request the complete deletion of the data associated with your account. You can reach us at the address listed in the Contact section for such requests.</p><h4>6. Changes</h4><p>This privacy policy may be updated from time to time. Significant changes will be posted on this page.</p>
+      </div>
+    </div>
+    <footer id="footerText">&copy; 2026 Destiny Chart Matrix. Tüm Hakları Saklıdır.</footer>
+  </div>
+
+<script>
+(function() {
+  var STRINGS = {
+    tr: {
+      title: "Gizlilik Politikası — Destiny Chart Matrix",
+      desc: "Destiny Chart Matrix gizlilik ve çerez politikası.",
+      h1: "Gizlilik Politikası",
+      back: "\u2190 Ana Sayfaya D\u00f6n",
+      updated: "Son g\u00fcncelleme: A\u011fustos 2026",
+      footer: "\u00a9 2026 Destiny Chart Matrix. T\u00fcm Haklar\u0131 Sakl\u0131d\u0131r.",
+      btn: "EN"
+    },
+    en: {
+      title: "Privacy Policy — Destiny Chart Matrix",
+      desc: "Destiny Chart Matrix privacy and cookie policy.",
+      h1: "Privacy Policy",
+      back: "\u2190 Back to Home",
+      updated: "Last updated: August 2026",
+      footer: "\u00a9 2026 Destiny Chart Matrix. All Rights Reserved.",
+      btn: "TR"
+    }
+  };
+
+  function applyLang(lang) {
+    var s = STRINGS[lang];
+    document.getElementById('pageTitle').textContent = s.title;
+    document.getElementById('pageDesc').setAttribute('content', s.desc);
+    document.getElementById('pageH1').textContent = s.h1;
+    document.getElementById('backLink').textContent = s.back;
+    document.getElementById('updatedText').textContent = s.updated;
+    document.getElementById('footerText').textContent = s.footer;
+    document.getElementById('langBtn').textContent = s.btn;
+    document.querySelectorAll('[data-lang]').forEach(function(el) {
+      el.style.display = (el.getAttribute('data-lang') === lang) ? 'block' : 'none';
+    });
+    document.documentElement.lang = lang;
+    localStorage.setItem('kaderMatrisi_lang', lang);
+  }
+
+  window.toggleLang = function() {
+    var current = localStorage.getItem('kaderMatrisi_lang') || 'tr';
+    applyLang(current === 'tr' ? 'en' : 'tr');
+  };
+
+  var saved = localStorage.getItem('kaderMatrisi_lang');
+  var initial;
+  if (saved === 'tr' || saved === 'en') {
+    initial = saved;
+  } else {
+    initial = (navigator.language || navigator.userLanguage || 'tr').toLowerCase().indexOf('tr') === 0 ? 'tr' : 'en';
+  }
+  applyLang(initial);
+})();
+</script>
+</body>
+</html>

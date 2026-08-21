@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">İade Politikası — Destiny Chart Matrix</title>
+<meta name="description" id="pageDesc" content="Destiny Chart Matrix iade ve iptal politikası.">
+<link rel="icon" href="assets/app-icon.svg" type="image/svg+xml">
+<style>
+  :root {
+    --ink: #122a4d;
+    --muted: #4d6d8f;
+    --bg: #e7f2fb;
+    --panel: #ffffff;
+    --gold: #2f6fae;
+    --gold-light: #a9cfe9;
+    --gold-deep: #12365e;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+  }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .back-link {
+    color: var(--gold-deep);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .back-link:hover { text-decoration: underline; }
+  .lang-toggle-btn {
+    background: var(--panel);
+    border: 1.5px solid var(--gold);
+    color: var(--gold-deep);
+    font-weight: 700;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  .lang-toggle-btn:hover { background: var(--gold-light); }
+  .panel {
+    background: var(--panel);
+    border-radius: 16px;
+    padding: 36px 40px;
+    box-shadow: 0 4px 24px rgba(18,54,94,0.08);
+  }
+  h1 {
+    font-size: 28px;
+    color: var(--gold-deep);
+    margin: 0 0 8px;
+  }
+  .updated {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+  h4 {
+    color: var(--gold-deep);
+    font-size: 18px;
+    margin: 28px 0 10px;
+  }
+  h4:first-of-type { margin-top: 0; }
+  p {
+    color: #2b3a52;
+    font-size: 15.5px;
+    margin: 0 0 14px;
+  }
+  strong { color: var(--ink); }
+  a { color: var(--gold); }
+  footer {
+    text-align: center;
+    margin-top: 32px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  [data-lang="en"] { display: none; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top-bar">
+      <a class="back-link" id="backLink" href="/">&larr; Ana Sayfaya Dön</a>
+      <button class="lang-toggle-btn" id="langBtn" onclick="toggleLang()">EN</button>
+    </div>
+    <div class="panel">
+      <h1 id="pageH1">İade Politikası</h1>
+      <div class="updated" id="updatedText">Son güncelleme: Ağustos 2026</div>
+      <div data-lang="tr">
+        <h4>1. Dijital Ürünlerin Doğası</h4><p>Destiny Chart Matrix'te satın aldığınız tüm içerikler (bölüm kilitleri, abonelikler, PDF raporlar) dijital ürünlerdir ve satın alma anında anında erişime açılır. Bu nedenle, içeriğe erişim sağlandıktan sonra, sadece fikir değiştirme ("cayma") gerekçesiyle iade talep edilemez — bu, dijital içerik satışlarında sektör standardı bir uygulamadır.</p><h4>2. İade Yapılabilecek Durumlar</h4><p>Aşağıdaki durumlarda iade talebinizi değerlendiririz: ödeme yapıldığı hâlde ilgili bölümün kilidinin teknik bir hata nedeniyle açılmaması; aynı ürün için yanlışlıkla birden fazla kez ücretlendirilmeniz (mükerrer ödeme); veya yürürlükteki tüketici mevzuatının iade hakkı tanıdığı diğer durumlar. Böyle bir sorunla karşılaşırsanız, İletişim bölümünde belirtilen adresten bize kayıtlı e-posta adresiniz ve işlem tarihiyle birlikte ulaşın.</p><h4>3. Abonelikler</h4><p>Aylık ve yıllık abonelikler, iptal edilmediği sürece otomatik olarak yenilenir. Aboneliğinizi istediğiniz zaman iptal edebilirsiniz; iptal, bir sonraki yenileme döneminden itibaren geçerli olur ve o ana kadar zaten faturalandırılmış dönem için kısmi iade yapılmaz. İptal sonrasında, ödemesi yapılmış mevcut dönemin sonuna kadar erişiminiz devam eder.</p><h4>4. Ödeme Sağlayıcımızın Rolü</h4><p>Ödemeleriniz, platformumuzun "Merchant of Record" (Yetkili Satıcı) ortağı olan ödeme sağlayıcımız üzerinden işlenir. Bu nedenle nihai iade değerlendirmesi ve işlemi ödeme sağlayıcımızın kendi Alıcı Koşulları'na (Buyer Terms) tabidir; iade talebinizi hem bize hem de doğrudan ödeme sağlayıcımızın destek ekibine iletebilirsiniz.</p><h4>5. İletişim</h4><p>İade talepleriniz için İletişim bölümündeki e-posta adresinden bize ulaşabilirsiniz. Talepler genellikle 1-2 iş günü içinde değerlendirilir.</p>
+      </div>
+      <div data-lang="en">
+        <h4>1. Nature of Digital Products</h4><p>All content you purchase on Destiny Chart Matrix (section unlocks, subscriptions, PDF reports) is digital and is unlocked immediately upon purchase. As such, once access has been granted, refunds cannot be requested solely on the basis of changing your mind — this is standard practice for digital content sales.</p><h4>2. When Refunds May Be Granted</h4><p>We consider refund requests in the following cases: a section remained locked due to a technical error despite successful payment; you were mistakenly charged more than once for the same item (duplicate charge); or other situations where applicable consumer protection law grants a right of refund. If you encounter such an issue, please contact us via the address listed in the Contact section, including your registered email and the date of the transaction.</p><h4>3. Subscriptions</h4><p>Monthly and yearly subscriptions renew automatically unless canceled. You may cancel at any time; cancellation takes effect at the start of the next renewal period, and no partial refund is issued for the period already billed. After cancellation, you retain access until the end of the period already paid for.</p><h4>4. Our Payment Provider's Role</h4><p>Your payments are processed through our Merchant of Record partner. As such, the final assessment and processing of refunds is subject to our payment provider's own Buyer Terms; you may direct refund requests to us or directly to their support team.</p><h4>5. Contact</h4><p>For refund requests, you can reach us at the email address listed in the Contact section. Requests are typically reviewed within 1-2 business days.</p>
+      </div>
+    </div>
+    <footer id="footerText">&copy; 2026 Destiny Chart Matrix. Tüm Hakları Saklıdır.</footer>
+  </div>
+
+<script>
+(function() {
+  var STRINGS = {
+    tr: {
+      title: "İade Politikası — Destiny Chart Matrix",
+      desc: "Destiny Chart Matrix iade ve iptal politikası.",
+      h1: "İade Politikası",
+      back: "\u2190 Ana Sayfaya D\u00f6n",
+      updated: "Son g\u00fcncelleme: A\u011fustos 2026",
+      footer: "\u00a9 2026 Destiny Chart Matrix. T\u00fcm Haklar\u0131 Sakl\u0131d\u0131r.",
+      btn: "EN"
+    },
+    en: {
+      title: "Refund Policy — Destiny Chart Matrix",
+      desc: "Destiny Chart Matrix refund and cancellation policy.",
+      h1: "Refund Policy",
+      back: "\u2190 Back to Home",
+      updated: "Last updated: August 2026",
+      footer: "\u00a9 2026 Destiny Chart Matrix. All Rights Reserved.",
+      btn: "TR"
+    }
+  };
+
+  function applyLang(lang) {
+    var s = STRINGS[lang];
+    document.getElementById('pageTitle').textContent = s.title;
+    document.getElementById('pageDesc').setAttribute('content', s.desc);
+    document.getElementById('pageH1').textContent = s.h1;
+    document.getElementById('backLink').textContent = s.back;
+    document.getElementById('updatedText').textContent = s.updated;
+    document.getElementById('footerText').textContent = s.footer;
+    document.getElementById('langBtn').textContent = s.btn;
+    document.querySelectorAll('[data-lang]').forEach(function(el) {
+      el.style.display = (el.getAttribute('data-lang') === lang) ? 'block' : 'none';
+    });
+    document.documentElement.lang = lang;
+    localStorage.setItem('kaderMatrisi_lang', lang);
+  }
+
+  window.toggleLang = function() {
+    var current = localStorage.getItem('kaderMatrisi_lang') || 'tr';
+    applyLang(current === 'tr' ? 'en' : 'tr');
+  };
+
+  var saved = localStorage.getItem('kaderMatrisi_lang');
+  var initial;
+  if (saved === 'tr' || saved === 'en') {
+    initial = saved;
+  } else {
+    initial = (navigator.language || navigator.userLanguage || 'tr').toLowerCase().indexOf('tr') === 0 ? 'tr' : 'en';
+  }
+  applyLang(initial);
+})();
+</script>
+</body>
+</html>

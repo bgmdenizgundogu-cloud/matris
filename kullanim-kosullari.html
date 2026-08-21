@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Kullanım Koşulları — Destiny Chart Matrix</title>
+<meta name="description" id="pageDesc" content="Destiny Chart Matrix kullanım koşulları.">
+<link rel="icon" href="assets/app-icon.svg" type="image/svg+xml">
+<style>
+  :root {
+    --ink: #122a4d;
+    --muted: #4d6d8f;
+    --bg: #e7f2fb;
+    --panel: #ffffff;
+    --gold: #2f6fae;
+    --gold-light: #a9cfe9;
+    --gold-deep: #12365e;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+  }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .back-link {
+    color: var(--gold-deep);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .back-link:hover { text-decoration: underline; }
+  .lang-toggle-btn {
+    background: var(--panel);
+    border: 1.5px solid var(--gold);
+    color: var(--gold-deep);
+    font-weight: 700;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  .lang-toggle-btn:hover { background: var(--gold-light); }
+  .panel {
+    background: var(--panel);
+    border-radius: 16px;
+    padding: 36px 40px;
+    box-shadow: 0 4px 24px rgba(18,54,94,0.08);
+  }
+  h1 {
+    font-size: 28px;
+    color: var(--gold-deep);
+    margin: 0 0 8px;
+  }
+  .updated {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+  h4 {
+    color: var(--gold-deep);
+    font-size: 18px;
+    margin: 28px 0 10px;
+  }
+  h4:first-of-type { margin-top: 0; }
+  p {
+    color: #2b3a52;
+    font-size: 15.5px;
+    margin: 0 0 14px;
+  }
+  strong { color: var(--ink); }
+  a { color: var(--gold); }
+  footer {
+    text-align: center;
+    margin-top: 32px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  [data-lang="en"] { display: none; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top-bar">
+      <a class="back-link" id="backLink" href="/">&larr; Ana Sayfaya Dön</a>
+      <button class="lang-toggle-btn" id="langBtn" onclick="toggleLang()">EN</button>
+    </div>
+    <div class="panel">
+      <h1 id="pageH1">Kullanım Koşulları</h1>
+      <div class="updated" id="updatedText">Son güncelleme: Ağustos 2026</div>
+      <div data-lang="tr">
+        <h4>1. Hizmet Tanımı</h4><p>Destiny Chart Matrix, doğum tarihine dayalı sembolik bir "Analiz Matrisi" hesaplaması sunan, yalnızca bilgilendirme, eğitim ve eğlence amaçlı bir platformdur. Sunulan içerik tıbbi, psikolojik, hukuki veya finansal bir tavsiye niteliği taşımaz.</p><h4>2. Hesap Sorumluluğu</h4><p>Bir hesap oluşturduğunuzda, şifrenizin gizliliğini korumaktan ve hesabınız altında gerçekleşen tüm faaliyetlerden siz sorumlusunuz. Şüpheli bir aktivite fark ederseniz bizimle iletişime geçmelisiniz.</p><h4>3. Satın Alımlar ve Abonelikler</h4><p>Platformumuzdaki bazı içerikler ücretlidir ve ödeme sağlayıcımız üzerinden güvenli şekilde satın alınır. Abonelikler, iptal edilmediği sürece belirtilen dönemde otomatik olarak yenilenebilir. İade ve iptal talepleri ödeme sağlayıcımızın satın alma sırasında sunduğu koşullara tabidir.</p><h4>4. Fikri Mülkiyet</h4><p>Platformdaki tüm metin, tasarım, grafik ve hesaplama mantığı Destiny Chart Matrix'e aittir ve izinsiz kopyalanamaz, dağıtılamaz veya ticari amaçla yeniden kullanılamaz.</p><h4>5. Sorumluluğun Sınırlandırılması</h4><p>Platformun sunduğu içerik semboliktir ve eğlence/kişisel gelişim amaçlıdır. Bu içeriklere dayanarak alınan kararlardan Destiny Chart Matrix sorumlu tutulamaz. Sağlık, hukuk veya finansal konularda her zaman ilgili alanda uzman bir profesyonele danışmanız önerilir.</p><h4>6. Koşullardaki Değişiklikler</h4><p>Bu kullanım koşulları zaman zaman güncellenebilir. Güncel koşullar her zaman bu sayfada yer alacaktır.</p>
+      </div>
+      <div data-lang="en">
+        <h4>1. Description of Service</h4><p>Destiny Chart Matrix is a platform that offers a symbolic "Destiny Matrix" calculation based on your birth date, intended for informational, educational, and entertainment purposes only. The content provided does not constitute medical, psychological, legal, or financial advice.</p><h4>2. Account Responsibility</h4><p>When you create an account, you are responsible for keeping your password confidential and for all activity that occurs under your account. You should contact us if you notice any suspicious activity.</p><h4>3. Purchases and Subscriptions</h4><p>Some content on our platform is paid and is purchased securely through our payment provider. Subscriptions may renew automatically for the stated period unless canceled. Refund and cancellation requests are subject to the terms presented by our payment provider at the time of purchase.</p><h4>4. Intellectual Property</h4><p>All text, design, graphics, and calculation logic on the platform belong to Destiny Chart Matrix and may not be copied, distributed, or reused for commercial purposes without permission.</p><h4>5. Limitation of Liability</h4><p>The content offered by the platform is symbolic and intended for entertainment/personal-development purposes. Destiny Chart Matrix cannot be held responsible for decisions made based on this content. You are always advised to consult a qualified professional in the relevant field for health, legal, or financial matters.</p><h4>6. Changes to These Terms</h4><p>These terms of use may be updated from time to time. The current terms will always be posted on this page.</p>
+      </div>
+    </div>
+    <footer id="footerText">&copy; 2026 Destiny Chart Matrix. Tüm Hakları Saklıdır.</footer>
+  </div>
+
+<script>
+(function() {
+  var STRINGS = {
+    tr: {
+      title: "Kullanım Koşulları — Destiny Chart Matrix",
+      desc: "Destiny Chart Matrix kullanım koşulları.",
+      h1: "Kullanım Koşulları",
+      back: "\u2190 Ana Sayfaya D\u00f6n",
+      updated: "Son g\u00fcncelleme: A\u011fustos 2026",
+      footer: "\u00a9 2026 Destiny Chart Matrix. T\u00fcm Haklar\u0131 Sakl\u0131d\u0131r.",
+      btn: "EN"
+    },
+    en: {
+      title: "Terms of Use — Destiny Chart Matrix",
+      desc: "Destiny Chart Matrix terms of use.",
+      h1: "Terms of Use",
+      back: "\u2190 Back to Home",
+      updated: "Last updated: August 2026",
+      footer: "\u00a9 2026 Destiny Chart Matrix. All Rights Reserved.",
+      btn: "TR"
+    }
+  };
+
+  function applyLang(lang) {
+    var s = STRINGS[lang];
+    document.getElementById('pageTitle').textContent = s.title;
+    document.getElementById('pageDesc').setAttribute('content', s.desc);
+    document.getElementById('pageH1').textContent = s.h1;
+    document.getElementById('backLink').textContent = s.back;
+    document.getElementById('updatedText').textContent = s.updated;
+    document.getElementById('footerText').textContent = s.footer;
+    document.getElementById('langBtn').textContent = s.btn;
+    document.querySelectorAll('[data-lang]').forEach(function(el) {
+      el.style.display = (el.getAttribute('data-lang') === lang) ? 'block' : 'none';
+    });
+    document.documentElement.lang = lang;
+    localStorage.setItem('kaderMatrisi_lang', lang);
+  }
+
+  window.toggleLang = function() {
+    var current = localStorage.getItem('kaderMatrisi_lang') || 'tr';
+    applyLang(current === 'tr' ? 'en' : 'tr');
+  };
+
+  var saved = localStorage.getItem('kaderMatrisi_lang');
+  var initial;
+  if (saved === 'tr' || saved === 'en') {
+    initial = saved;
+  } else {
+    initial = (navigator.language || navigator.userLanguage || 'tr').toLowerCase().indexOf('tr') === 0 ? 'tr' : 'en';
+  }
+  applyLang(initial);
+})();
+</script>
+</body>
+</html>
