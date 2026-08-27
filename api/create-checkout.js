@@ -56,7 +56,7 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'server_misconfigured' });
   }
 
-  const { kind, itemId, birthDateKey, userId, userEmail } = req.body || {};
+  const { kind, itemId, birthDateKey, userId, userEmail, anonId } = req.body || {};
 
   if (!['single', 'subscription_monthly', 'subscription_yearly'].includes(kind)) {
     return res.status(400).json({ error: 'invalid_kind' });
@@ -79,6 +79,7 @@ export default async function handler(req, res) {
   if (itemId) metadata.itemId = itemId;
   if (birthDateKey) metadata.birthDateKey = birthDateKey;
   if (userId) metadata.userId = userId;
+  if (!userId && anonId) metadata.anonId = anonId;
 
   const payload = {
     product_cart: [{ product_id: productId, quantity: 1 }],
