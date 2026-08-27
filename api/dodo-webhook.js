@@ -57,14 +57,24 @@ export default async function handler(req, res) {
     const isPaymentSuccess = eventType === 'payment.succeeded';
     const isSubscriptionSuccess = eventType === 'subscription.active' || eventType === 'subscription.renewed';
 
-    if ((isPaymentSuccess || isSubscriptionSuccess) && metadata.userId) {
-      await saveToSupabase({
-        userId: metadata.userId,
-        kind: metadata.kind || (isSubscriptionSuccess ? 'subscription' : 'single'),
-        itemId: metadata.itemId || null,
-        birthDateKey: metadata.birthDateKey || null,
-        dodoProductId,
-      });
+    if (isPaymentSuccess || isSubscriptionSuccess) {
+      if (metadata.userId) {
+        await saveToSupabase({
+          userId: metadata.userId,
+          kind: metadata.kind || (isSubscriptionSuccess ? 'subscription' : 'single'),
+          itemId: metadata.itemId || null,
+          birthDateKey: metadata.birthDateKey || null,
+          dodoProductId,
+        });
+      } else if (metadata.anonId) {
+        await saveGuestPurchaseToSupabase({
+          anonId: metadata.anonId,
+          kind: metadata.kind || (isSubscriptionSuccess ? 'subscription' : 'single'),
+          itemId: metadata.itemId || null,
+          birthDateKey: metadata.birthDateKey || null,
+          dodoProductId,
+        });
+      }
     }
 
     return res.status(200).json({ received: true });
@@ -95,5 +105,29 @@ async function saveToSupabase({ userId, kind, itemId, birthDateKey, dodoProductI
   if (!resp.ok) {
     const text = await resp.text().catch(() => '');
     throw new Error(`Supabase insert failed: ${resp.status} ${text}`);
+  }
+}
+
+async function saveGuestPurchaseToSupabase({ anonId, kind, itemId, birthDateKey, dodoProductId }) {
+  const url = `${process.env.SUPABASE_URL}/rest/v1/guest_purchases`;
+  const resp = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      apikey: process.env.SUPABASE_SERVICE_ROLE_KEY,
+      Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
+      Prefer: 'return=minimal',
+    },
+    body: JSON.stringify({
+      anon_id: anonId,
+      kind,
+      item_id: itemId,
+      price_id: dodoProductId,
+      birth_date: birthDateKey,
+    }),
+  });
+  if (!resp.ok) {
+    const text = await resp.text().catch(() => '');
+    throw new Error(`Supabase guest insert failed: ${resp.status} ${text}`);
   }
 }
