@@ -339,6 +339,13 @@
   .pw-single-scope-note{ margin-top:8px; font-size:.76rem; line-height:1.4; color:#2f6f4e; background:#eef8f1; border:1px solid #cfe8d9; border-radius:8px; padding:7px 9px; }
   .pw-loading{ text-align:center; font-size:.85rem; color:var(--muted); margin-top:14px; display:none; }
   .pw-loading.show{ display:block; }
+  .pw-guest-gate{ text-align:center; }
+  .pw-guest-gate-text{ font-size:.92rem; color:var(--ink); margin:0 0 16px; line-height:1.5; }
+  .pw-guest-continue-link{ display:block; width:100%; background:none; border:none; cursor:pointer; margin-top:14px; padding:6px; color:var(--muted); font-size:.86rem; text-decoration:underline; }
+  .pw-guest-continue-link:hover{ color:var(--ink); }
+  .pw-guest-continue-note{ display:block; margin-top:4px; font-size:.74rem; color:var(--muted); text-decoration:none; font-style:italic; line-height:1.4; }
+  .pw-guest-back-link{ display:block; width:100%; background:none; border:none; cursor:pointer; margin-top:12px; padding:4px; color:var(--muted); font-size:.82rem; }
+  .pw-guest-back-link:hover{ color:var(--ink); }
 
   /* ---------- Footer ---------- */
   .site-footer{ margin-top:56px; padding:40px 24px 28px; background:linear-gradient(160deg,#0d2745,#12365e); color:#cfe0f3; font-family:Arial,sans-serif; border-radius:28px 28px 0 0; }
@@ -421,8 +428,8 @@
     <button class="pw-close" onclick="closePaywallModal()" aria-label="Kapat">&times;</button>
     <h3 id="paywallTitle" data-i18n="pw_title">Bu Bölüm Kilitli</h3>
     <p class="pw-sub" id="paywallSub" data-i18n="pw_sub">Devam etmek için bir seçenek belirleyin.</p>
-    <div class="pw-options">
-      <button class="pw-option green recommended pw-option-yearly" onclick="startCheckout('subscription_yearly')">
+    <div class="pw-options" id="pwOptions">
+      <button class="pw-option green recommended pw-option-yearly" onclick="handleBuyClick('subscription_yearly')">
         <div class="pw-offer-banner" data-i18n="pw_yearly_banner">🔥 SINIRLI SÜRELİ TEKLİF — %30 İNDİRİM</div>
         <div class="pw-option-title"><span data-i18n="pw_sub_yearly_title">Yıllık Erişim</span></div>
         <div class="pw-price-per-month" data-i18n="pw_yearly_per_month">299 ₺ / ay</div>
@@ -434,7 +441,7 @@
         </div>
         <div class="pw-option-desc" data-i18n="pw_yearly_billing_note">(Yıllık faturalandırılır • İstediğiniz zaman iptal edin)</div>
       </button>
-      <button class="pw-option pw-option-monthly pw-option-monthly-discount" onclick="startCheckout('subscription_monthly')">
+      <button class="pw-option pw-option-monthly pw-option-monthly-discount" onclick="handleBuyClick('subscription_monthly')">
         <div class="pw-offer-banner pw-offer-banner-monthly" data-i18n="pw_monthly_banner">🔥 SINIRLI SÜRELİ TEKLİF — %50 İNDİRİM</div>
         <div class="pw-option-title"><span data-i18n="pw_sub_monthly_title">Aylık Erişim</span></div>
         <div class="pw-price-strike-row">
@@ -445,12 +452,23 @@
         </div>
         <div class="pw-option-desc" data-i18n="pw_monthly_billing_note">Aylık faturalandırılır</div>
       </button>
-      <button class="pw-option" onclick="startCheckout('single')">
+      <button class="pw-option" onclick="handleBuyClick('single')">
         <div class="pw-option-title" data-i18n="pw_single_title">Sadece Bu Bölümü Aç</div>
         <div class="pw-option-desc" id="paywallSingleDesc" data-i18n="pw_single_desc">Yalnızca bu bölümün kilidini tek seferlik ödeme ile açın.</div>
         <div class="pw-single-scope-note" data-i18n="pw_single_scope_note">🔓 Bu tarihe özel kalıcı erişim: Bir kez satın alın, bu doğum tarihi için istediğiniz zaman tekrar girip okuyabilir ve PDF'ini indirebilirsiniz.</div>
         <div class="pw-option-price" id="pwSinglePrice" data-i18n="pw_single_price">Bu Bölümü Satın Al</div>
       </button>
+    </div>
+    <div class="pw-guest-gate" id="pwGuestGate" style="display:none;">
+      <p class="pw-guest-gate-text" data-i18n="pw_guest_gate_text">Satın alımınızın hangi cihazdan girerseniz girin kaybolmaması için önce ücretsiz bir hesap oluşturmanızı öneririz.</p>
+      <button class="pw-option green" onclick="openAuthFromGate()">
+        <div class="pw-option-title" data-i18n="pw_guest_gate_login_btn">Giriş Yap / Kayıt Ol</div>
+      </button>
+      <button class="pw-guest-continue-link" onclick="continueAsGuest()">
+        <span data-i18n="pw_guest_continue">Misafir olarak devam et</span><br>
+        <span class="pw-guest-continue-note" data-i18n="pw_guest_continue_note">(Misafir olarak devam ederseniz, satın alımınız yalnızca bu tarayıcıda geçerli olur; başka bir tarayıcı veya cihazdan erişemezsiniz.)</span>
+      </button>
+      <button class="pw-guest-back-link" onclick="cancelGuestGate()" data-i18n="pw_guest_gate_back">&larr; Geri dön</button>
     </div>
     <p class="pw-loading" id="pwLoading" data-i18n="pw_loading">Ödeme penceresi açılıyor…</p>
   </div>
@@ -1296,6 +1314,11 @@ const UI_STRINGS = {
   module_return_to_purchased: { tr: 'Satın aldığınız tarihe geri dön ({date})', en: 'Return to your purchased date ({date})' },
   pw_single_price: { tr: 'Bu Bölümü Satın Al', en: 'Buy This Section' },
   pw_loading: { tr: 'Ödeme penceresi açılıyor…', en: 'Opening checkout…' },
+  pw_guest_gate_text: { tr: 'Satın alımınızın hangi cihazdan girerseniz girin kaybolmaması için önce ücretsiz bir hesap oluşturmanızı öneririz.', en: 'We recommend creating a free account first, so your purchase stays available no matter which device you sign in from.' },
+  pw_guest_gate_login_btn: { tr: 'Giriş Yap / Kayıt Ol', en: 'Log In / Sign Up' },
+  pw_guest_continue: { tr: 'Misafir olarak devam et', en: 'Continue as guest' },
+  pw_guest_continue_note: { tr: '(Misafir olarak devam ederseniz, satın alımınız yalnızca bu tarayıcıda geçerli olur; başka bir tarayıcı veya cihazdan erişemezsiniz.)', en: '(If you continue as a guest, your purchase will only work in this browser; you will not be able to access it from another browser or device.)' },
+  pw_guest_gate_back: { tr: '← Geri dön', en: '← Go back' },
   tab_all: { tr: 'Analiz Matrisi', en: 'Analysis Matrix' },
   tab_finance: { tr: 'Finansal Fırsatlar', en: 'Financial Opportunities' },
   tab_love: { tr: 'Aşk & İlişkiler', en: 'Love & Relationships' },
@@ -9257,6 +9280,18 @@ function renderMainTalent(A, outerA, innerA, C, outerC, innerC){
 function toggleMainTalent(i){
   const item = document.querySelector(`#mainAccordion .acc-item[data-index="${i}"]`);
   if(item) item.classList.toggle('open');
+}
+// Ödeme onaylanıp kilit açıldığında, kullanıcıyı o bölümü aramak zorunda
+// bırakmadan doğrudan içeriğe götürüyoruz: bölüm otomatik açılır ve sayfa
+// oraya kaydırılır.
+function openAndScrollToUnlockedItem(itemId){
+  if (!itemId) return;
+  setTimeout(() => {
+    const item = document.querySelector(`#mainAccordion .acc-item[data-index="${itemId}"]`);
+    if (!item) return;
+    item.classList.add('open');
+    item.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 350);
 }
 
 function filterSections(indexes, navKey){
@@ -24022,6 +24057,7 @@ function applyGuardToInsertedItem(itemId, itemTitle) {
 
 // --- 6) Paywall modal aç/kapat ---
 let currentPaywallItemId = null;
+let pendingGateKind = null;
 function openPaywallModal(itemId, itemTitle, moduleDateKey) {
   currentPaywallItemId = itemId;
   // moduleDateKey verildiyse (bağımsız modül bağlamında açıldıysa), tekil
@@ -24033,11 +24069,44 @@ function openPaywallModal(itemId, itemTitle, moduleDateKey) {
   const singleLabel = `${tt('pw_single_price')} — ${priceInfo.price}`;
   document.getElementById('pwSinglePrice').textContent = singleLabel;
   document.getElementById('paywallSingleDesc').textContent = tt('pw_single_desc');
+  // Her açılışta "misafir kapısı" kapalı, normal seçenekler görünür başlar:
+  cancelGuestGate();
   document.getElementById('paywallOverlay').classList.add('open');
 }
 function closePaywallModal() {
   document.getElementById('paywallOverlay').classList.remove('open');
   document.getElementById('pwLoading').classList.remove('show');
+}
+
+// --- 6.1) "Misafir kapısı": hesap açmadan devam etmeden önce, giriş
+// yapmış olmayan ziyaretçilere önce hesap açmayı öneriyoruz — çünkü
+// hesapsız (misafir) satın alımlar SADECE o tarayıcıda geçerli kalır.
+// Zaten giriş yapmış kullanıcılar bu ekranı hiç görmez, doğrudan
+// startCheckout() çağrılır.
+function handleBuyClick(kind) {
+  if (currentUser) {
+    startCheckout(kind);
+    return;
+  }
+  pendingGateKind = kind;
+  document.getElementById('pwOptions').style.display = 'none';
+  document.getElementById('pwGuestGate').style.display = 'block';
+}
+function continueAsGuest() {
+  const kind = pendingGateKind;
+  cancelGuestGate();
+  if (kind) startCheckout(kind);
+}
+function openAuthFromGate() {
+  pendingGateKind = null;
+  closePaywallModal();
+  cancelGuestGate();
+  openAuthModal('signup');
+}
+function cancelGuestGate() {
+  pendingGateKind = null;
+  document.getElementById('pwGuestGate').style.display = 'none';
+  document.getElementById('pwOptions').style.display = '';
 }
 
 // --- 6.5) Misafir (hesapsız) satın alımlar için anonim kimlik ---
@@ -24113,15 +24182,15 @@ async function startCheckout(kind) {
   // Sayfa, ödeme sırasında tamamen yenilense/yönlendirilse bile (3D Secure
   // gibi akışlarda olabiliyor) bu bilgiyi kaybetmemek için localStorage'a
   // yazıyoruz — sayfa geri döndüğünde checkPendingGuestPurchase() bunu
-  // okuyup sunucuya "bu ödeme gerçekten geçti mi?" diye soracak.
-  if (!currentUser && anonId) {
-    savePendingGuestCheck({
-      anonId,
-      kind,
-      itemId: kind === 'single' ? currentPaywallItemId : null,
-      birthDateKey: kind === 'single' ? (pendingPurchaseDateKey || currentBirthDateKey) : null,
-    });
-  }
+  // okuyup sunucuya "bu ödeme gerçekten geçti mi?" diye soracak. Bu kontrol
+  // hem misafirler HEM de giriş yapmış kullanıcılar için aynı şekilde çalışır.
+  savePendingGuestCheck({
+    anonId: currentUser ? null : anonId,
+    userId: currentUser ? currentUser.id : null,
+    kind,
+    itemId: kind === 'single' ? currentPaywallItemId : null,
+    birthDateKey: kind === 'single' ? (pendingPurchaseDateKey || currentBirthDateKey) : null,
+  });
 
   try {
     const resp = await fetch('/api/create-checkout', {
@@ -24141,6 +24210,14 @@ async function startCheckout(kind) {
       return;
     }
     await DodoPaymentsCheckout.DodoPayments.Checkout.open({ checkoutUrl });
+    // Dodo overlay'inin hangi olayı ne zaman göndereceğine (ya da hiç
+    // göndermeyeceğine) güvenmek yerine, checkout açılır açılmaz sunucuya
+    // "ödendi mi?" diye sormaya başlıyoruz — pencere otomatik kapansa,
+    // manuel kapatılsın, ya da sayfa hiç yenilenmesin fark etmez. Bu, hem
+    // misafirler hem de giriş yapmış kullanıcılar için geçerlidir.
+    if (kind) {
+      checkPendingGuestPurchase(0);
+    }
   } catch (e) {
     console.warn('Checkout başlatma hatası:', e);
     document.getElementById('pwLoading').classList.remove('show');
@@ -24168,16 +24245,19 @@ function onDodoEvent(event) {
 
   if (event.event_type === 'checkout.success' || event.event_type === 'checkout.completed') {
     const kind = pendingCheckoutKind;
+    let unlockedItemId = null;
     if (kind === 'subscription_monthly' || kind === 'subscription_yearly') {
       markSubscribed();
     } else if (kind === 'single' && currentPaywallItemId) {
       markItemUnlocked(currentPaywallItemId, pendingPurchaseDateKey || currentBirthDateKey);
+      unlockedItemId = currentPaywallItemId;
     }
     closePaywallModal();
     // Kilit durumundaki değişikliği yansıtmak için sayfayı/sonucu yeniden çiz:
     if (typeof hesapla === 'function') {
       try { hesapla(); } catch (e) { /* no-op */ }
     }
+    if (unlockedItemId) openAndScrollToUnlockedItem(unlockedItemId);
     // Giriş yapmış kullanıcılar için: webhook'un Supabase'e yazması birkaç
     // saniye sürebilir; kısa bir gecikmeyle senkronu tetikleyip diğer
     // cihazlar/oturumlar için de kalıcılığı garanti altına alıyoruz.
@@ -24198,7 +24278,7 @@ function onDodoEvent(event) {
 // (sadece "checkout başlatılmıştı" diye) kilit açmaz.
 async function checkPendingGuestPurchase(attempt) {
   const pending = loadPendingGuestCheck();
-  if (!pending || !pending.anonId) return;
+  if (!pending || (!pending.anonId && !pending.userId)) return;
 
   // 48 saatten eski bir kayıt varsa artık anlamsızdır, temizle.
   if (Date.now() - (pending.savedAt || 0) > 48 * 60 * 60 * 1000) {
@@ -24207,10 +24287,13 @@ async function checkPendingGuestPurchase(attempt) {
   }
 
   try {
+    const checkBody = { kind: pending.kind, itemId: pending.itemId };
+    if (pending.userId) checkBody.userId = pending.userId;
+    else checkBody.anonId = pending.anonId;
     const resp = await fetch('/api/check-guest-purchase', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ anonId: pending.anonId, kind: pending.kind, itemId: pending.itemId }),
+      body: JSON.stringify(checkBody),
     });
     if (!resp.ok) return;
     const data = await resp.json();
@@ -24224,6 +24307,7 @@ async function checkPendingGuestPurchase(attempt) {
       if (typeof hesapla === 'function') {
         try { hesapla(); } catch (e) { /* no-op */ }
       }
+      if (pending.kind === 'single' && pending.itemId) openAndScrollToUnlockedItem(pending.itemId);
       return;
     }
   } catch (e) {
@@ -24234,8 +24318,8 @@ async function checkPendingGuestPurchase(attempt) {
   // kez daha deneriz, sonra bırakırız (kayıt localStorage'da kalır, bir
   // sonraki sayfa ziyaretinde tekrar denenir).
   const nextAttempt = (attempt || 0) + 1;
-  if (nextAttempt <= 5) {
-    setTimeout(() => checkPendingGuestPurchase(nextAttempt), 5000);
+  if (nextAttempt <= 15) {
+    setTimeout(() => checkPendingGuestPurchase(nextAttempt), 4000);
   }
 }
 window.addEventListener('load', () => checkPendingGuestPurchase(0));
