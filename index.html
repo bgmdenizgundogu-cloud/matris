@@ -24276,6 +24276,32 @@ function onDodoEvent(event) {
 // GERÇEKTEN başarılı olarak işleyip işlemediğini sorar. Sadece sunucu
 // "evet, ödendi" derse kilit açılır — sayfanın kendisi asla kör güvenle
 // (sadece "checkout başlatılmıştı" diye) kilit açmaz.
+// Ödeme s\u0131ras\u0131nda sayfa tamamen yenilenip do\u011fum tarihi alanlar\u0131 bo\u015falm\u0131\u015fsa
+// (\u00f6rn. 3D Secure y\u00f6nlendirmesi), sat\u0131n alma an\u0131nda kullan\u0131lan tarihi geri
+// doldurup hesaplamay\u0131 otomatik olarak tekrar \u00e7al\u0131\u015ft\u0131r\u0131r \u2014 b\u00f6ylece a\u00e7\u0131lan
+// b\u00f6l\u00fcm ger\u00e7ekten g\u00f6r\u00fcnt\u00fclenebilir olur. Zaten bir sonu\u00e7 g\u00f6r\u00fcn\u00fcyorsa (kullan\u0131c\u0131
+// hala ayn\u0131 sekmedeyse) hi\u00e7bir \u015feye dokunmaz.
+function restoreBirthDateAndRecalculateIfNeeded(birthDateKey) {
+  if (!birthDateKey) return false;
+  const resultsPage = document.getElementById('resultsPage');
+  const alreadyShowing = resultsPage && resultsPage.style.display !== 'none';
+  if (alreadyShowing) return false;
+  const dEl = document.getElementById('d'), mEl = document.getElementById('m'), yEl = document.getElementById('y');
+  if (!dEl || !mEl || !yEl) return false;
+  const parts = String(birthDateKey).split('-');
+  if (parts.length !== 3) return false;
+  dEl.value = parts[0];
+  mEl.value = parts[1];
+  yEl.value = parts[2];
+  if (typeof hesapla !== 'function') return false;
+  try {
+    hesapla();
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 async function checkPendingGuestPurchase(attempt) {
   const pending = loadPendingGuestCheck();
   if (!pending || (!pending.anonId && !pending.userId)) return;
@@ -24304,7 +24330,15 @@ async function checkPendingGuestPurchase(attempt) {
         markItemUnlocked(pending.itemId, pending.birthDateKey);
       }
       clearPendingGuestCheck();
-      if (typeof hesapla === 'function') {
+      // Ödeme sırasında sayfa tamamen yenilenmişse (3D Secure yönlendirmesi
+      // gibi), doğum tarihi alanları da boşalmış olabilir — bu durumda
+      // hesapla() hiçbir şey çizemez ve açılacak bölüm de olmaz. O yüzden
+      // önce, satın alma anında kullanılan tarihi geri dolduruyoruz.
+      let recalculated = false;
+      if (pending.kind === 'single' && pending.birthDateKey) {
+        recalculated = restoreBirthDateAndRecalculateIfNeeded(pending.birthDateKey);
+      }
+      if (!recalculated && typeof hesapla === 'function') {
         try { hesapla(); } catch (e) { /* no-op */ }
       }
       if (pending.kind === 'single' && pending.itemId) openAndScrollToUnlockedItem(pending.itemId);
