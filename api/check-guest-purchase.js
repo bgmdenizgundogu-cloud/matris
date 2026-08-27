@@ -5,10 +5,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'method_not_allowed' });
   }
 
-  const { anonId, kind, itemId } = req.body || {};
+  const { anonId, userId, kind, itemId } = req.body || {};
 
-  if (!anonId || typeof anonId !== 'string') {
-    return res.status(400).json({ error: 'missing_anon_id' });
+  if ((!anonId || typeof anonId !== 'string') && (!userId || typeof userId !== 'string')) {
+    return res.status(400).json({ error: 'missing_identifier' });
   }
   if (!['single', 'subscription_monthly', 'subscription_yearly'].includes(kind)) {
     return res.status(400).json({ error: 'invalid_kind' });
@@ -18,15 +18,23 @@ export default async function handler(req, res) {
     const isSubscription = kind === 'subscription_monthly' || kind === 'subscription_yearly';
 
     const params = new URLSearchParams();
-    params.set('anon_id', `eq.${anonId}`);
-    params.set('kind', `eq.${isSubscription ? 'subscription' : 'single'}`);
+    params.set('kind', `eq.${kind}`);
     if (!isSubscription && itemId) {
       params.set('item_id', `eq.${itemId}`);
     }
     params.set('select', 'id');
     params.set('limit', '1');
 
-    const url = `${process.env.SUPABASE_URL}/rest/v1/guest_purchases?${params.toString()}`;
+    let table;
+    if (userId) {
+      table = 'purchases';
+      params.set('user_id', `eq.${userId}`);
+    } else {
+      table = 'guest_purchases';
+      params.set('anon_id', `eq.${anonId}`);
+    }
+
+    const url = `${process.env.SUPABASE_URL}/rest/v1/${table}?${params.toString()}`;
     const resp = await fetch(url, {
       method: 'GET',
       headers: {
