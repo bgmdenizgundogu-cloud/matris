@@ -24040,7 +24040,44 @@ function closePaywallModal() {
   document.getElementById('pwLoading').classList.remove('show');
 }
 
-// --- 7) Dodo Payments Checkout başlatma ---
+// --- 6.5) Misafir (hesapsız) satın alımlar için anonim kimlik ---
+// Sayfa tamamen yenilense bile (bazı ödeme yöntemlerinde Dodo, 3D Secure
+// onayı için kullanıcıyı başka bir sayfaya götürüp geri getirebiliyor —
+// bu durumda tarayıcı hafızasındaki JS değişkenleri sıfırlanır) satın alımı
+// doğru kullanıcıya bağlayabilmek için, HER ziyaretçiye (giriş yapmış olsun
+// olmasın) tarayıcısında kalıcı, rastgele ve anlamsız bir kimlik veriyoruz.
+// Bu kimlik hiçbir kişisel bilgi içermez, sadece "bu tarayıcı" demektir.
+const ANON_ID_STORAGE_KEY = 'kaderMatrisi_anonId';
+function getOrCreateAnonId() {
+  try {
+    let id = localStorage.getItem(ANON_ID_STORAGE_KEY);
+    if (!id) {
+      id = 'anon_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 12);
+      localStorage.setItem(ANON_ID_STORAGE_KEY, id);
+    }
+    return id;
+  } catch (e) {
+    return null;
+  }
+}
+const PENDING_GUEST_CHECK_KEY = 'kaderMatrisi_pendingGuestCheck';
+function savePendingGuestCheck(info) {
+  try { localStorage.setItem(PENDING_GUEST_CHECK_KEY, JSON.stringify({ ...info, savedAt: Date.now() })); } catch (e) { /* no-op */ }
+}
+function loadPendingGuestCheck() {
+  try {
+    const raw = localStorage.getItem(PENDING_GUEST_CHECK_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (e) {
+    return null;
+  }
+}
+function clearPendingGuestCheck() {
+  try { localStorage.removeItem(PENDING_GUEST_CHECK_KEY); } catch (e) { /* no-op */ }
+}
+
+
 // Ürün ID'si ve secret key burada YOK. Backend'e sadece "ne satın alınıyor"
 // bilgisini gönderiyoruz (kind/itemId/...); hangi Dodo ürününe karşılık
 // geldiğine /api/create-checkout.js kendi içinde, sunucu tarafında karar
@@ -24054,6 +24091,8 @@ async function startCheckout(kind) {
   document.getElementById('pwLoading').classList.add('show');
   pendingCheckoutKind = kind;
 
+  const anonId = getOrCreateAnonId();
+
   // rawBody: null/undefined/boş alanlar asla gönderilmiyor — eski Paddle
   // sürümündeki customData davranışıyla birebir aynı mantık.
   const rawBody = {
@@ -24062,12 +24101,26 @@ async function startCheckout(kind) {
     birthDateKey: kind === 'single' ? (pendingPurchaseDateKey || currentBirthDateKey) : undefined,
     userId: currentUser ? currentUser.id : undefined,
     userEmail: currentUser ? currentUser.email : undefined,
+    anonId: currentUser ? undefined : (anonId || undefined),
   };
   const body = {};
   for (const [key, value] of Object.entries(rawBody)) {
     if (value !== null && value !== undefined && value !== '') {
       body[key] = value;
     }
+  }
+
+  // Sayfa, ödeme sırasında tamamen yenilense/yönlendirilse bile (3D Secure
+  // gibi akışlarda olabiliyor) bu bilgiyi kaybetmemek için localStorage'a
+  // yazıyoruz — sayfa geri döndüğünde checkPendingGuestPurchase() bunu
+  // okuyup sunucuya "bu ödeme gerçekten geçti mi?" diye soracak.
+  if (!currentUser && anonId) {
+    savePendingGuestCheck({
+      anonId,
+      kind,
+      itemId: kind === 'single' ? currentPaywallItemId : null,
+      birthDateKey: kind === 'single' ? (pendingPurchaseDateKey || currentBirthDateKey) : null,
+    });
   }
 
   try {
@@ -24131,9 +24184,61 @@ function onDodoEvent(event) {
     if (currentUser && typeof syncPurchasesFromSupabase === 'function') {
       setTimeout(() => { try { syncPurchasesFromSupabase(); } catch (e) { /* no-op */ } }, 4000);
     }
+    clearPendingGuestCheck();
     pendingCheckoutKind = null;
   }
 }
+
+// --- 9) Sayfa yüklendiğinde: yarım kalmış (sayfa yenilenmiş) misafir
+// ödemesi var mı diye sunucuya sor ---
+// Bu, startCheckout() içinde kaydedilen "pendingGuestCheck" bilgisini okur
+// ve /api/check-guest-purchase üzerinden Dodo'nun webhook'unun bu ödemeyi
+// GERÇEKTEN başarılı olarak işleyip işlemediğini sorar. Sadece sunucu
+// "evet, ödendi" derse kilit açılır — sayfanın kendisi asla kör güvenle
+// (sadece "checkout başlatılmıştı" diye) kilit açmaz.
+async function checkPendingGuestPurchase(attempt) {
+  const pending = loadPendingGuestCheck();
+  if (!pending || !pending.anonId) return;
+
+  // 48 saatten eski bir kayıt varsa artık anlamsızdır, temizle.
+  if (Date.now() - (pending.savedAt || 0) > 48 * 60 * 60 * 1000) {
+    clearPendingGuestCheck();
+    return;
+  }
+
+  try {
+    const resp = await fetch('/api/check-guest-purchase', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ anonId: pending.anonId, kind: pending.kind, itemId: pending.itemId }),
+    });
+    if (!resp.ok) return;
+    const data = await resp.json();
+    if (data && data.purchased) {
+      if (pending.kind === 'subscription_monthly' || pending.kind === 'subscription_yearly') {
+        markSubscribed();
+      } else if (pending.kind === 'single' && pending.itemId) {
+        markItemUnlocked(pending.itemId, pending.birthDateKey);
+      }
+      clearPendingGuestCheck();
+      if (typeof hesapla === 'function') {
+        try { hesapla(); } catch (e) { /* no-op */ }
+      }
+      return;
+    }
+  } catch (e) {
+    // ağ hatası — sessizce geç, aşağıdaki yeniden deneme mekanizması devam eder
+  }
+
+  // Webhook birkaç saniye gecikmiş olabilir: ilk birkaç dakika içinde birkaç
+  // kez daha deneriz, sonra bırakırız (kayıt localStorage'da kalır, bir
+  // sonraki sayfa ziyaretinde tekrar denenir).
+  const nextAttempt = (attempt || 0) + 1;
+  if (nextAttempt <= 5) {
+    setTimeout(() => checkPendingGuestPurchase(nextAttempt), 5000);
+  }
+}
+window.addEventListener('load', () => checkPendingGuestPurchase(0));
 
 </script>
 <div class="offline-notice" role="status" aria-live="polite">Çevrimdışısınız; uygulama kayıtlı içerikle çalışıyor.</div>
