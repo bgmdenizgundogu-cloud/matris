@@ -13,16 +13,16 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="assets/app-icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/icon-192.png">
-<title id="pageTitle">Destiny Chart Matrix — Analiz Matrisi Hesaplayıcı</title>
-<meta property="og:title" content="Destiny Chart Matrix — Analiz Matrisi Hesaplayıcı">
+<title id="pageTitle">Destiny Chart Matrix — Kader Matrisi Hesaplayıcı</title>
+<meta property="og:title" content="Destiny Chart Matrix — Kader Matrisi Hesaplayıcı">
 <meta property="og:description" content="Doğum tarihinizden kişisel Analiz Matrisinizi ücretsiz hesaplayın.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://destinychartmatrix.com/">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Destiny Chart Matrix — Analiz Matrisi Hesaplayıcı">
+<meta name="twitter:title" content="Destiny Chart Matrix — Kader Matrisi Hesaplayıcı">
 <meta name="twitter:description" content="Doğum tarihinizden kişisel Analiz Matrisinizi ücretsiz hesaplayın.">
 <link rel="canonical" href="https://destinychartmatrix.com/">
-<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dodopayments-checkout@latest/dist/index.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
   :root{
@@ -560,7 +560,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
     <div class="nav-links" id="navLinks1">
-      <span class="nav-item active" data-i18n="nav_home" style="cursor:pointer;" onclick="filterSections('all', 'nav_home')">ANALİZ MATRİSİ</span>
+      <span class="nav-item active" data-i18n="nav_home" style="cursor:pointer;" onclick="filterSections('all', 'nav_home')">KADER MATRİSİ</span>
       <span class="nav-item" data-i18n="nav_finance" style="cursor:pointer;" onclick="filterSections(['mt2','mt4'], 'nav_finance')">FİNANS</span>
       <span class="nav-item" data-i18n="nav_love" style="cursor:pointer;" onclick="filterSections(['mt5','mt18','mt20'], 'nav_love')">İLİŞKİ ANALİZİ</span>
       <span class="nav-item" data-i18n="nav_children" style="cursor:pointer;" onclick="filterSections(['mt21'], 'nav_children')">ÇOCUK</span>
@@ -588,7 +588,7 @@
   </nav>
 
   <div class="hero-wrap">
-    <h1 class="hero-title"><span data-i18n="hero_calc">HESAPLA</span> <span class="pill" data-i18n="hero_pill">ANALİZ MATRİSİ</span></h1>
+    <h1 class="hero-title"><span data-i18n="hero_calc">HESAPLA</span> <span class="pill" data-i18n="hero_pill">KADER MATRİSİ</span></h1>
     <p class="hero-sub" data-i18n="hero_sub">Doğum tarihinizi girin ve Analiz Matrisinizi hesaplayın; kendi kişisel şifrenizi birlikte çözelim.</p>
   </div>
 
@@ -637,7 +637,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
     <div class="nav-links" id="navLinks2">
-      <span class="nav-item active" data-i18n="nav_home" style="cursor:pointer;" onclick="filterSections('all', 'nav_home')">ANALİZ MATRİSİ</span>
+      <span class="nav-item active" data-i18n="nav_home" style="cursor:pointer;" onclick="filterSections('all', 'nav_home')">KADER MATRİSİ</span>
       <span class="nav-item" data-i18n="nav_finance" style="cursor:pointer;" onclick="filterSections(['mt2','mt4'], 'nav_finance')">FİNANS</span>
       <span class="nav-item" data-i18n="nav_love" style="cursor:pointer;" onclick="filterSections(['mt5','mt18','mt20'], 'nav_love')">İLİŞKİ ANALİZİ</span>
       <span class="nav-item" data-i18n="nav_children" style="cursor:pointer;" onclick="filterSections(['mt21'], 'nav_children')">ÇOCUK</span>
@@ -914,15 +914,15 @@
     <div class="footer-bottom">
       <p class="footer-copyright" data-i18n="footer_copyright">© 2026 Destiny Chart Matrix. Tüm Hakları Saklıdır.</p>
       <div class="footer-links">
-        <a href="/fiyatlandirma.html" data-i18n="footer_pricing">Fiyatlandırma</a>
+        <a href="javascript:void(0)" onclick="openLegalModal('pricing')" data-i18n="footer_pricing">Fiyatlandırma</a>
         <span class="sep">|</span>
-        <a href="/gizlilik-politikasi.html" data-i18n="footer_privacy">Gizlilik Politikası</a>
+        <a href="javascript:void(0)" onclick="openLegalModal('privacy')" data-i18n="footer_privacy">Gizlilik Politikası</a>
         <span class="sep">|</span>
-        <a href="/kullanim-kosullari.html" data-i18n="footer_terms">Kullanım Koşulları</a>
+        <a href="javascript:void(0)" onclick="openLegalModal('terms')" data-i18n="footer_terms">Kullanım Koşulları</a>
         <span class="sep">|</span>
-        <a href="/iade-politikasi.html" data-i18n="footer_refund">İade Politikası</a>
+        <a href="javascript:void(0)" onclick="openLegalModal('refund')" data-i18n="footer_refund">İade Politikası</a>
         <span class="sep">|</span>
-        <a href="/iletisim.html" data-i18n="footer_contact">İletişim</a>
+        <a href="javascript:void(0)" onclick="openLegalModal('contact')" data-i18n="footer_contact">İletişim</a>
       </div>
     </div>
   </div>
@@ -1195,7 +1195,7 @@ function toggleLanguage() {
 }
 
 const UI_STRINGS = {
-  nav_home: { tr: 'ANALİZ MATRİSİ', en: 'ANALYSIS MATRIX' },
+  nav_home: { tr: 'KADER MATRİSİ', en: 'DESTINY MATRIX' },
   nav_finance: { tr: 'FİNANS', en: 'FINANCE' },
   nav_love: { tr: 'İLİŞKİ ANALİZİ', en: 'RELATIONSHIP ANALYSIS' },
   nav_children: { tr: 'ÇOCUK', en: 'CHILD' },
@@ -1224,6 +1224,8 @@ const UI_STRINGS = {
   legal_terms_body: { tr: `<h4>1. Hizmet Tanımı</h4><p>Destiny Chart Matrix, doğum tarihine dayalı sembolik bir "Analiz Matrisi" hesaplaması sunan, yalnızca bilgilendirme, eğitim ve eğlence amaçlı bir platformdur. Sunulan içerik tıbbi, psikolojik, hukuki veya finansal bir tavsiye niteliği taşımaz.</p><h4>2. Hesap Sorumluluğu</h4><p>Bir hesap oluşturduğunuzda, şifrenizin gizliliğini korumaktan ve hesabınız altında gerçekleşen tüm faaliyetlerden siz sorumlusunuz. Şüpheli bir aktivite fark ederseniz bizimle iletişime geçmelisiniz.</p><h4>3. Satın Alımlar ve Abonelikler</h4><p>Platformumuzdaki bazı içerikler ücretlidir ve ödeme sağlayıcımız üzerinden güvenli şekilde satın alınır. Abonelikler, iptal edilmediği sürece belirtilen dönemde otomatik olarak yenilenebilir. İade ve iptal talepleri ödeme sağlayıcımızın satın alma sırasında sunduğu koşullara tabidir.</p><h4>4. Fikri Mülkiyet</h4><p>Platformdaki tüm metin, tasarım, grafik ve hesaplama mantığı Destiny Chart Matrix'e aittir ve izinsiz kopyalanamaz, dağıtılamaz veya ticari amaçla yeniden kullanılamaz.</p><h4>5. Sorumluluğun Sınırlandırılması</h4><p>Platformun sunduğu içerik semboliktir ve eğlence/kişisel gelişim amaçlıdır. Bu içeriklere dayanarak alınan kararlardan Destiny Chart Matrix sorumlu tutulamaz. Sağlık, hukuk veya finansal konularda her zaman ilgili alanda uzman bir profesyonele danışmanız önerilir.</p><h4>6. Koşullardaki Değişiklikler</h4><p>Bu kullanım koşulları zaman zaman güncellenebilir. Güncel koşullar her zaman bu sayfada yer alacaktır.</p>`, en: `<h4>1. Description of Service</h4><p>Destiny Chart Matrix is a platform that offers a symbolic "Destiny Matrix" calculation based on your birth date, intended for informational, educational, and entertainment purposes only. The content provided does not constitute medical, psychological, legal, or financial advice.</p><h4>2. Account Responsibility</h4><p>When you create an account, you are responsible for keeping your password confidential and for all activity that occurs under your account. You should contact us if you notice any suspicious activity.</p><h4>3. Purchases and Subscriptions</h4><p>Some content on our platform is paid and is purchased securely through our payment provider. Subscriptions may renew automatically for the stated period unless canceled. Refund and cancellation requests are subject to the terms presented by our payment provider at the time of purchase.</p><h4>4. Intellectual Property</h4><p>All text, design, graphics, and calculation logic on the platform belong to Destiny Chart Matrix and may not be copied, distributed, or reused for commercial purposes without permission.</p><h4>5. Limitation of Liability</h4><p>The content offered by the platform is symbolic and intended for entertainment/personal-development purposes. Destiny Chart Matrix cannot be held responsible for decisions made based on this content. You are always advised to consult a qualified professional in the relevant field for health, legal, or financial matters.</p><h4>6. Changes to These Terms</h4><p>These terms of use may be updated from time to time. The current terms will always be posted on this page.</p>` },
   legal_contact_title: { tr: 'İletişim', en: 'Contact' },
   legal_contact_body: { tr: `<p>Sorularınız, geri bildirimleriniz veya destek talepleriniz için bize aşağıdaki kanaldan ulaşabilirsiniz:</p><p><strong>E-posta:</strong> info@destinychartmatrix.com</p><p>Genellikle 1-2 iş günü içinde yanıt veriyoruz. Hesabınız, satın alımlarınız veya teknik bir sorunla ilgili yazıyorsanız, kayıtlı e-posta adresinizi belirtmeniz süreci hızlandıracaktır.</p>`, en: `<p>For questions, feedback, or support requests, you can reach us through the channel below:</p><p><strong>Email:</strong> info@destinychartmatrix.com</p><p>We typically respond within 1-2 business days. If you're writing about your account, a purchase, or a technical issue, including your registered email address will help us assist you faster.</p>` },
+  legal_pricing_title: { tr: 'Fiyatlandırma', en: 'Pricing' },
+  legal_pricing_body: { tr: `<h4>Yıllık Sınırsız Erişim</h4><p><strong>$69.99 / yıl</strong> (3.399 ₺) — Tüm bölümlere, tüm modüllere ve ileriye dönük yeni içeriklere sınırsız erişim. Otomatik yenilenir, istediğiniz zaman iptal edebilirsiniz.</p><h4>Aylık Sınırsız Erişim</h4><p><strong>$14.99 / ay</strong> (799 ₺ / ay) — Tüm bölümlere sınırsız erişim, aylık faturalandırma. Otomatik yenilenir, istediğiniz zaman iptal edebilirsiniz.</p><h4>Tekil Bölüm Satın Alma</h4><p>Belirli bir analiz bölümünü tek seferlik satın almak isterseniz, bölüme göre değişen fiyatlarla (yaklaşık <strong>$0.99 – $6.99</strong> arası) tekil erişim satın alabilirsiniz. Her bölümün fiyatı, ilgili bölümün yanında açıkça belirtilir.</p><h4>Ödeme ve Faturalandırma</h4><p>Tüm ödemeler güvenilir bir ödeme sağlayıcısı üzerinden, güvenli şekilde işlenir. Kart bilgileriniz bizim sunucularımızda saklanmaz. Fiyatlar; bulunduğunuz bölgeye göre yerel para biriminde (₺) veya USD cinsinden gösterilebilir.</p><h4>İptal ve İade</h4><p>Abonelikler istediğiniz zaman iptal edilebilir; iptal, bir sonraki yenileme döneminden itibaren geçerli olur. Detaylı bilgi için <a href="javascript:void(0)" onclick="openLegalModal('refund')">İade Politikası</a> sayfamızı inceleyebilirsiniz.</p>`, en: `<h4>Yearly Unlimited Access</h4><p><strong>$69.99 / year</strong> — Unlimited access to every section, every module, and future content as it's added. Renews automatically; cancel anytime.</p><h4>Monthly Unlimited Access</h4><p><strong>$14.99 / month</strong> — Unlimited access to every section, billed monthly. Renews automatically; cancel anytime.</p><h4>Single Section Purchase</h4><p>If you'd like to unlock a specific section on its own, one-time prices range from roughly <strong>$0.99 to $6.99</strong> depending on the section. Each section's price is shown clearly next to it.</p><h4>Payment and Billing</h4><p>All payments are processed securely through a trusted payment provider. Your card details are never stored on our servers. Prices may be shown in your local currency or in USD depending on your region.</p><h4>Cancellation and Refunds</h4><p>Subscriptions can be canceled at any time; cancellation takes effect at the start of the next renewal period. For details, see our <a href="javascript:void(0)" onclick="openLegalModal('refund')">Refund Policy</a> page.</p>` },
   auth_signin_title: { tr: 'Giriş Yap', en: 'Sign In' },
   auth_signup_title: { tr: 'Kayıt Ol', en: 'Sign Up' },
   auth_email_label: { tr: 'E-posta', en: 'Email' },
@@ -1260,11 +1262,11 @@ const UI_STRINGS = {
   age_label_55: { tr: '55 yaş', en: 'Age 55' },
   age_label_65: { tr: '65 yaş', en: 'Age 65' },
   age_label_75: { tr: '75 yaş', en: 'Age 75' },
-  page_title: { tr: 'Destiny Chart Matrix — Analiz Matrisi Hesaplayıcı', en: 'Destiny Chart Matrix — Free Destiny Matrix Calculator' },
+  page_title: { tr: 'Destiny Chart Matrix — Kader Matrisi Hesaplayıcı', en: 'Destiny Chart Matrix — Free Destiny Matrix Calculator' },
   img_alt_preview: { tr: 'Analiz Matrisi önizleme', en: 'Analysis Matrix preview' },
   svg_aria_template: { tr: 'Sabit Analiz Matrisi şablonu', en: 'Fixed Analysis Matrix template' },
   hero_calc: { tr: 'HESAPLA', en: 'CALCULATE' },
-  hero_pill: { tr: 'ANALİZ MATRİSİ', en: 'YOUR ANALYSIS MATRIX' },
+  hero_pill: { tr: 'KADER MATRİSİ', en: 'DESTINY MATRIX' },
   hero_sub: { tr: 'Doğum tarihinizi girin ve Analiz Matrisinizi hesaplayın; kendi kişisel şifrenizi birlikte çözelim.', en: 'Enter your birth date and calculate your Analysis Matrix, and decode your personal code together with us.' },
   pw_title: { tr: 'Bu Bölüm Kilitli', en: 'This Section Is Locked' },
   pw_sub: { tr: 'Devam etmek için bir seçenek belirleyin.', en: 'Choose an option to continue.' },
@@ -22998,6 +23000,7 @@ const LEGAL_CONTENT = {
   terms: { titleKey: 'legal_terms_title', bodyKey: 'legal_terms_body' },
   refund: { titleKey: 'legal_refund_title', bodyKey: 'legal_refund_body' },
   contact: { titleKey: 'legal_contact_title', bodyKey: 'legal_contact_body' },
+  pricing: { titleKey: 'legal_pricing_title', bodyKey: 'legal_pricing_body' },
 };
 function openLegalModal(kind) {
   const entry = LEGAL_CONTENT[kind];
@@ -23011,18 +23014,17 @@ function closeLegalModal() {
 }
 
 // ==========================================================================
-// PAYWALL / PADDLE ENTEGRASYONU
+// PAYWALL / DODO PAYMENTS ENTEGRASYONU
 // --------------------------------------------------------------------------
-// GÜVENLİK NOTU: Bu proje tamamen istemci tarafında (tek bir statik HTML
-// dosyası, sunucu yok) çalıştığı için buradaki kilit/erişim kontrolü SADECE
-// arayüz seviyesindedir (UX gate). Kilitli bölümlerin gerçek metinleri yine
-// de bu dosyanın JS'i içinde mevcuttur; teknik olarak tarayıcı konsolundan
-// veya sayfa kaynağından görülebilir/devre dışı bırakılabilir. Ödemenin
-// GERÇEKTEN doğrulanması ve içeriğin güvenli şekilde saklanması için ileride
-// bir backend (Paddle webhook'larıyle abonelik/satın alma durumunu doğrulayan
-// bir sunucu + içeriği sunucudan çeken bir yapı) eklenmesi gerekir. Şu anki
-// haliyle bu sistem "iyi niyetli kullanıcıyı yönlendirme" ve ödeme akışını
-// başlatma işini yapar; sıkı içerik koruması sağlamaz.
+// GÜNCELLEME: Ödeme oturumu artık /api/create-checkout.js (Vercel Serverless
+// Function) üzerinden, sunucu tarafında oluşturuluyor; ürün ID'leri ve
+// DODO_PAYMENTS_API_KEY hiçbir zaman bu dosyada / tarayıcıda yer almıyor.
+// Satın alma onayı /api/dodo-webhook.js tarafında Dodo'nun imzası
+// doğrulandıktan SONRA Supabase'e yazılıyor — yani gerçek güvenlik artık
+// sunucu tarafında sağlanıyor. Bu dosyadaki kilit mantığı (localStorage +
+// anlık markItemUnlocked/markSubscribed çağrıları) sadece AYNI SEKMEDE hızlı
+// bir kullanıcı deneyimi sağlamak içindir; kalıcı/doğrulanmış durum her
+// zaman webhook -> Supabase -> syncPurchasesFromSupabase() akışından gelir.
 // --------------------------------------------------------------------------
 
 // ==========================================================================
@@ -23032,11 +23034,11 @@ function closeLegalModal() {
 // projesi (supabase.com) oluşturup aşağıdaki iki değeri kendi projenden
 // almalısın: Project Settings > API > Project URL ve anon public key.
 // Ayrıca "purchases" tablosunu (user_id, kind, item_id, price_id, created_at)
-// oluşturursan, Paddle satın alımlarını kullanıcı hesabına bağlayabilirsin
-// (bkz. handlePaddleEvent fonksiyonundaki TODO notu).
+// oluşturursan, Dodo satın alımlarını kullanıcı hesabına bağlayabilirsin
+// (bkz. /api/dodo-webhook.js).
 // ==========================================================================
-const SUPABASE_URL = 'YOUR_SUPABASE_PROJECT_URL'; // örn: https://xxxxx.supabase.co
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const SUPABASE_URL = 'https://txprepxctpzkhswhtpzq.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4cHJlcHhjdHB6a2hzd2h0cHpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4NDIxMzIsImV4cCI6MjEwMzQxODEzMn0.7F3oDIMgmQfK3QiSKuHSVTbFXdCvS6yQt1AziXgOS1w';
 
 let supabaseClient = null;
 let currentUser = null;
@@ -23092,15 +23094,13 @@ window.addEventListener('load', initSupabase);
 //   create policy "Kullanıcılar kendi satın alımını ekleyebilir"
 //     on purchases for insert with check (auth.uid() = user_id);
 //
-// NOT (dürüst olmak gerekirse): Bu, satın alımı istemci tarafında (kullanıcının
-// tarayıcısından) Supabase'e yazıyor. Bu, "tarayıcı kapansa/çıkış yapılsa bile
-// kaybolmasın" sorununu tamamen çözer. Ancak sahte bir satın alım kaydı
-// oluşturulmasına karşı (birinin, hiç ödeme yapmadan bu insert'i taklit
-// etmesine karşı) TAM güvenlik için, ileride Paddle'ın webhook'unu dinleyen
-// bir sunucu tarafı fonksiyonun (Supabase Edge Function gibi) bu insert'i
-// SADECE Paddle'dan gelen gerçek bir "checkout.completed" olayında yapması
-// gerekir. Şimdilik bu istemci-taraflı sürüm, %99 kullanım senaryosu olan
-// "gerçek müşterinin erişimini kaybetmemesi" sorununu çözüyor.
+// NOT: Bu client-side insert artık yalnızca bir YEDEK/optimistic yol. Asıl
+// güvenli kayıt /api/dodo-webhook.js tarafında, Dodo'nun webhook imzası
+// (standardwebhooks paketiyle) doğrulandıktan SONRA, sunucu tarafında
+// SUPABASE_SERVICE_ROLE_KEY ile yapılıyor — yani sahte bir satın alma kaydı
+// oluşturmak artık mümkün değil. Bu fonksiyon (savePurchaseToSupabase) şu an
+// hiçbir yerden çağrılmıyor; ileride bir optimistic-yazma isterseniz burada
+// durur, ama zorunlu değildir.
 // ==========================================================================
 // ==========================================================================
 // ZİYARETÇİ ADININ KAYDEDİLMESİ ("Ad Soyad" alanı — ana giriş formu)
@@ -23339,78 +23339,65 @@ function switchAccountTab(tab) {
   document.querySelectorAll('.account-tab-panel').forEach(p => p.classList.toggle('active', p.getAttribute('data-tab-panel') === tab));
 }
 
-// --- 1) Fiyat kimlikleri: Paddle Dashboard'dan alınca burayı güncelle ---
-const PADDLE_ENVIRONMENT = 'production'; // Canlı hesaba geçildi
-const PADDLE_CLIENT_TOKEN = 'live_e9aa7e81ff77b7aa3dbe06a7614'; // Paddle > Developer Tools > Authentication — LIVE
-const PADDLE_SUBSCRIPTION_PRICE_ID = 'PADDLE_SUBSCRIPTION_PRICE_ID'; // (artık kullanılmıyor, geriye dönük uyumluluk için bırakıldı)
-const PADDLE_SUBSCRIPTION_MONTHLY_PRICE_ID = 'pri_01m0b4s94h5skrft4cwbt2924n'; // Aylık tüm-erişim abonelik ($14.99 / 799 TL) — LIVE
-const PADDLE_SUBSCRIPTION_YEARLY_PRICE_ID = 'pri_01m0b4w2vx4gcdn4cc86yr4pvf'; // Yıllık tüm-erişim abonelik ($69.99 / 3.399 TL) — LIVE
-// Aylık/yıllık fiyatları öğrenince burayı güncelle (örn: '$9.99 / ay'):
-const SUBSCRIPTION_MONTHLY_PRICE_DISPLAY = null;
-const SUBSCRIPTION_YEARLY_PRICE_DISPLAY = null;
-const PADDLE_SINGLE_UNLOCK_PRICE_ID = 'pri_01m0b2ya9zdd0h8mb4qgsgsw69'; // Genel/varsayılan tekil-açma price_id — İlahi Hediye ($1.99/99₺) ile aynı, özel fiyatı olmayan bölümler için kullanılır — LIVE
-// Henüz kendine özel fiyatı olmayan bölümlerde "Sadece Bu Bölümü Aç" seçeneğinde
-// gösterilecek varsayılan fiyat. Gerçek fiyatı belirleyince değiştir.
+// --- 1) Dodo Payments başlatma ---
+// ÖNEMLİ: Burada hiçbir secret/API key YOK — sadece "mode" (test/live) var.
+// Gerçek ürün eşlemesi ve secret key /api/create-checkout.js içinde,
+// sunucu tarafında tutuluyor.
+const DODO_CHECKOUT_MODE = 'live'; // Test ederken geçici olarak 'test' yapabilirsin
+
+// Bölüme özel tekil satın alma fiyatları — SADECE arayüzde gösterilecek
+// metinler için. Gerçek tutarı ve hangi Dodo ürününe karşılık geldiğini artık
+// /api/create-checkout.js içindeki PRODUCT_IDS eşlemesi belirliyor (client
+// tarafında hiçbir ürün/fiyat ID'si tutulmuyor — güvenlik için).
 const DEFAULT_SINGLE_PRICE_DISPLAY = '$1.99';
 const DEFAULT_SINGLE_PRICE_DISPLAY_TRY = '99 ₺';
-
-// Bölüme özel tekil satın alma fiyatları. Her satırdaki `priceId` alanını,
-// Paddle Dashboard'da o bölüm için oluşturduğun GERÇEK price_id ile
-// değiştirmen gerekir (Paddle'da her farklı fiyat için ayrı bir "Price"
-// kaydı oluşturulur). `price` alanı İngilizce (dolar), `priceTRY` alanı
-// Türkçe (Türk Lirası) arayüzde kullanıcıya GÖSTERİLEN metindir; gerçek
-// tutarı belirleyen Paddle Dashboard'daki price_id'dir. priceTRY, ~48
-// TRY/USD kuruna göre hesaplanıp psikolojik fiyatlandırma için bir üst
-// "99" ile bitecek şekilde yukarı yuvarlanmıştır (örn. 336 → 399) — kur
-// değiştikçe güncellenmelidir.
 const SECTION_PRICES = {
-  mt1:  { price: '$1.99', priceTRY: '99 ₺',  priceId: 'pri_01m0b2ya9zdd0h8mb4qgsgsw69' }, // İlahi Hediyeniz — Doğum Ayınız (B) — LIVE ✅
-  mt2:  { price: '$1.99', priceTRY: '99 ₺',  priceId: 'pri_01m0b31amm5vaq80hr5xzgew2h' }, // Finans-Materyal — Doğum Yılınız (C) — LIVE ✅
-  mt3:  { price: '$1.99', priceTRY: '99 ₺',  priceId: 'pri_01m0b34rsdbbp61335511cxhfw' }, // Konfor Noktanız — İçsel Güç Alanınız (E) — LIVE ✅
-  mt4:  { price: '$1.99', priceTRY: '99 ₺',  priceId: 'pri_01m0b36j1je6p5pp24cfxn9gza' }, // Refah Hattınız — Para — LIVE ✅
-  mt5:  { price: '$1.20', priceTRY: '99 ₺',  priceId: 'pri_01m0b38dfnkysq9vv3h22j84vv' }, // İlişki Kanalınız — LIVE ✅
-  mt6:  { price: '$1.99', priceTRY: '99 ₺',  priceId: 'pri_01m0b3bftjrv4xnpj0hacehk3t' }, // Karmik Ders — Geçmiş Yaşamlarınız (D) — LIVE ✅
-  mt7:  { price: '$1.20', priceTRY: '99 ₺',  priceId: 'pri_01m0b3hp7m6m6vhc4jrv1grwpr' }, // Yaşam Amacınız — LIVE ✅
-  mt8:  { price: '$1.20', priceTRY: '99 ₺',  priceId: 'pri_01m0b3m341s60rst490fepa8vy' }, // Ebeveyn ve Çocuk Kanalı — LIVE ✅
-  mt9:  { price: '$2.99', priceTRY: '199 ₺', priceId: 'pri_01m0b3pg2bnrjk9ctvt27wm0tq' }, // Soyunuzdan Gelen Hediyeler ve Karmalar — LIVE ✅
-  mt10: { price: '$2.99', priceTRY: '199 ₺', priceId: 'pri_01m0b3rqjqf2tnzjqn0wh0pb1j' }, // Troluc Programı — LIVE ✅
-  mt11: { price: '$0.99', priceTRY: '99 ₺',  priceId: 'pri_01m0b3t75yhme3b68f2gdgw7nx' }, // Soy Gücü ve İç Gücü — LIVE ✅
-  mt12: { price: '$1.99', priceTRY: '99 ₺',  priceId: 'pri_01m0b3xka56knyrstrctts0fxa' }, // Sağlık Kartınız — LIVE ✅
-  mt14: { price: '$6.99', priceTRY: '399 ₺', priceId: 'pri_01m0b3zf4nmwth3xwnrjchwjxv' }, // Yıllık Enerji Matrisi — LIVE ✅
-  mt15: { price: '$6.99', priceTRY: '399 ₺', priceId: 'pri_01m0b417460579ymsm2a4ha47w' }, // Aylık Öngörü Matrisi — LIVE ✅
-  mt16: { price: '$6.99', priceTRY: '399 ₺', priceId: 'pri_01m0b42zrkfxm6bp09h8dzsby4' }, // Günlük Öngörü Matrisi — LIVE ✅
-  mt17: { price: '$6.99', priceTRY: '399 ₺', priceId: 'pri_01m0b44fextn8bw0p8c9crd85r' }, // Özel Gün Enerjisi — LIVE ✅
-  mt18: { price: '$6.99', priceTRY: '399 ₺', priceId: 'pri_01m0b46tfjd9324p1qw3skv3ra' }, // Partner ile Özel Gün — LIVE ✅
-  mt19: { price: '$1.20', priceTRY: '99 ₺',  priceId: 'pri_01m0b48kjsem86p0swbbq4vzpg' }, // Meslekler — LIVE ✅
-  mt20: { price: '$7.99', priceTRY: '399 ₺', priceId: 'pri_01m0b4avy2f0q2m5ndmwtck1ap' }, // Uyum Haritası — Sinastri — LIVE ✅
-  mt21: { price: '$9.99', priceTRY: '499 ₺', priceId: 'pri_01m0b4cxswsdmv5f63g4c6d35r' }, // Çocuk Kader Matrisi (0-14 Yaş) — LIVE ✅
-  mt22: { price: '$1.99', priceTRY: '99 ₺',  priceId: 'pri_01m0b4ev1qrwy04ngeejsengj8' }, // Çakralar — LIVE ✅
-  mt23: { price: '$6.99', priceTRY: '399 ₺', priceId: 'pri_01m0b4gxtbpbaq0s541saka0ye' }, // Yıllık Sağlık Öngörüsü — LIVE ✅
+  mt1:  { price: '$1.99', priceTRY: '99 ₺'  }, // İlahi Hediyeniz — Doğum Ayınız (B)
+  mt2:  { price: '$1.99', priceTRY: '99 ₺'  }, // Finans-Materyal — Doğum Yılınız (C)
+  mt3:  { price: '$1.99', priceTRY: '99 ₺'  }, // Konfor Noktanız — İçsel Güç Alanınız (E)
+  mt4:  { price: '$1.99', priceTRY: '99 ₺'  }, // Refah Hattınız — Para
+  mt5:  { price: '$1.20', priceTRY: '99 ₺'  }, // İlişki Kanalınız
+  mt6:  { price: '$1.99', priceTRY: '99 ₺'  }, // Karmik Ders — Geçmiş Yaşamlarınız (D)
+  mt7:  { price: '$1.20', priceTRY: '99 ₺'  }, // Yaşam Amacınız
+  mt8:  { price: '$1.20', priceTRY: '99 ₺'  }, // Ebeveyn ve Çocuk Kanalı
+  mt9:  { price: '$2.99', priceTRY: '199 ₺' }, // Soyunuzdan Gelen Hediyeler ve Karmalar
+  mt10: { price: '$2.99', priceTRY: '199 ₺' }, // Troluc Programı
+  mt11: { price: '$0.99', priceTRY: '99 ₺'  }, // Soy Gücü ve İç Gücü
+  mt12: { price: '$1.99', priceTRY: '99 ₺'  }, // Sağlık Kartınız
+  mt14: { price: '$6.99', priceTRY: '399 ₺' }, // Yıllık Enerji Matrisi
+  mt15: { price: '$6.99', priceTRY: '399 ₺' }, // Aylık Öngörü Matrisi
+  mt16: { price: '$6.99', priceTRY: '399 ₺' }, // Günlük Öngörü Matrisi
+  mt17: { price: '$6.99', priceTRY: '399 ₺' }, // Özel Gün Enerjisi
+  mt18: { price: '$6.99', priceTRY: '399 ₺' }, // Partner ile Özel Gün
+  mt19: { price: '$1.20', priceTRY: '99 ₺'  }, // Meslekler
+  mt20: { price: '$7.99', priceTRY: '399 ₺' }, // Uyum Haritası — Sinastri
+  mt21: { price: '$9.99', priceTRY: '499 ₺' }, // Çocuk Kader Matrisi (0-14 Yaş)
+  mt22: { price: '$1.99', priceTRY: '99 ₺'  }, // Çakralar
+  mt23: { price: '$6.99', priceTRY: '399 ₺' }, // Yıllık Sağlık Öngörüsü
 };
 function getSectionPrice(itemId) {
-  const info = SECTION_PRICES[itemId] || { price: DEFAULT_SINGLE_PRICE_DISPLAY, priceTRY: DEFAULT_SINGLE_PRICE_DISPLAY_TRY, priceId: PADDLE_SINGLE_UNLOCK_PRICE_ID };
+  const info = SECTION_PRICES[itemId] || { price: DEFAULT_SINGLE_PRICE_DISPLAY, priceTRY: DEFAULT_SINGLE_PRICE_DISPLAY_TRY };
   // Arayüzde gösterilecek fiyat metni geçerli dile göre seçilir: Türkçede
-  // Türk Lirası, İngilizcede dolar. priceId (gerçek Paddle tutarı) dilden
-  // bağımsız olarak aynı kalır.
+  // Türk Lirası, İngilizcede dolar. Gerçek tutarı Dodo'daki ürün belirler.
   return { ...info, price: (currentLang === 'en' ? info.price : info.priceTRY) };
 }
 
 
-let paddleReady = false;
-function initPaddle() {
-  if (typeof Paddle === 'undefined') return;
+let dodoReady = false;
+function initDodo() {
+  if (typeof DodoPaymentsCheckout === 'undefined') return;
   try {
-    Paddle.Environment.set(PADDLE_ENVIRONMENT);
-    Paddle.Initialize({
-      token: PADDLE_CLIENT_TOKEN,
-      eventCallback: handlePaddleEvent,
+    DodoPaymentsCheckout.DodoPayments.Initialize({
+      mode: DODO_CHECKOUT_MODE,
+      displayType: 'overlay',
+      onEvent: onDodoEvent,
     });
-    paddleReady = true;
+    dodoReady = true;
   } catch (e) {
-    console.warn('Paddle init edilemedi:', e);
+    console.warn('Dodo Payments init edilemedi:', e);
   }
 }
-window.addEventListener('load', initPaddle);
+window.addEventListener('load', initDodo);
 
 // --- 2) Durum yönetimi (localStorage üzerinde kalıcı) ---
 const PAYWALL_STORAGE_KEY = 'kaderMatrisi_paywallState';
@@ -23433,8 +23420,8 @@ function savePaywallState() {
 }
 
 // --- Site sahibi önizleme modu ---
-// Paddle henüz gerçek fiyatlarla bağlanmadığı sürece hiç kimse (site sahibi
-// dahil) gerçek bir satın alma tamamlayamaz. İçeriği kontrol edebilmen için:
+// Dodo Payments'ta ürünler henüz oluşturulup product_id'ler girilmediği
+// sürece hiç kimse (site sahibi dahil) gerçek bir satın alma tamamlayamaz. İçeriği kontrol edebilmen için:
 // siteye ...index.html?ownerKey=kadermatrisi-onizleme-2026 şeklinde bir kez
 // girmen yeterli; bu tarayıcıda kalıcı olarak tüm kilitleri açar. Bu linki
 // kimseyle paylaşma; canlıya aldığında bu anahtarı değiştirmen önerilir
@@ -24053,69 +24040,98 @@ function closePaywallModal() {
   document.getElementById('pwLoading').classList.remove('show');
 }
 
-// --- 7) Paddle Checkout başlatma ---
-function startCheckout(kind) {
-  if (!paddleReady || typeof Paddle === 'undefined') {
-    console.warn('Paddle henüz hazır değil veya PADDLE_CLIENT_TOKEN ayarlanmadı.');
+// --- 7) Dodo Payments Checkout başlatma ---
+// Ürün ID'si ve secret key burada YOK. Backend'e sadece "ne satın alınıyor"
+// bilgisini gönderiyoruz (kind/itemId/...); hangi Dodo ürününe karşılık
+// geldiğine /api/create-checkout.js kendi içinde, sunucu tarafında karar
+// veriyor ve bize sadece bir checkoutUrl döndürüyor.
+let pendingCheckoutKind = null;
+async function startCheckout(kind) {
+  if (!dodoReady || typeof DodoPaymentsCheckout === 'undefined') {
+    console.warn('Dodo Payments henüz hazır değil.');
     return;
   }
-  let priceId;
-  if (kind === 'subscription_monthly') {
-    priceId = PADDLE_SUBSCRIPTION_MONTHLY_PRICE_ID;
-  } else if (kind === 'subscription_yearly') {
-    priceId = PADDLE_SUBSCRIPTION_YEARLY_PRICE_ID;
-  } else {
-    const priceInfo = getSectionPrice(currentPaywallItemId);
-    priceId = priceInfo.priceId;
-  }
   document.getElementById('pwLoading').classList.add('show');
-  // customData: Paddle'a giden özel veri objesi. null/undefined alanlar asla
-  // gönderilmiyor — bir alanın değeri yoksa, objeye HİÇ eklenmiyor (boş string
-  // de değil, tamamen çıkarılıyor). Bu, hem tekil bölüm kilidi açma hem de
-  // aylık/yıllık abonelik checkout'larının İKİSİ için de geçerlidir.
-  // customData.userId: kullanıcı giriş yapmışsa Paddle'a onun Supabase
-  // user_id'sini de gönderiyoruz, böylece webhook tarafında satın almayı
-  // doğru kullanıcıya bağlayabilirsin (bkz. handlePaddleEvent'teki TODO).
-  // customData.birthDateKey: tekil satın alımlarda, kilidin SADECE bu
-  // doğum tarihi için açılması amacıyla gönderiliyor (sektör standardı).
-  const rawCustomData = {
+  pendingCheckoutKind = kind;
+
+  // rawBody: null/undefined/boş alanlar asla gönderilmiyor — eski Paddle
+  // sürümündeki customData davranışıyla birebir aynı mantık.
+  const rawBody = {
     kind: kind,
     itemId: currentPaywallItemId,
     birthDateKey: kind === 'single' ? (pendingPurchaseDateKey || currentBirthDateKey) : undefined,
     userId: currentUser ? currentUser.id : undefined,
     userEmail: currentUser ? currentUser.email : undefined,
   };
-  const customData = {};
-  for (const [key, value] of Object.entries(rawCustomData)) {
+  const body = {};
+  for (const [key, value] of Object.entries(rawBody)) {
     if (value !== null && value !== undefined && value !== '') {
-      customData[key] = value;
+      body[key] = value;
     }
   }
-  Paddle.Checkout.open({
-    items: [{ priceId: priceId, quantity: 1 }],
-    customData: customData,
-  });
+
+  try {
+    const resp = await fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (!resp.ok) {
+      console.warn('Checkout oturumu oluşturulamadı:', resp.status, await resp.text().catch(() => ''));
+      document.getElementById('pwLoading').classList.remove('show');
+      return;
+    }
+    const { checkoutUrl } = await resp.json();
+    if (!checkoutUrl) {
+      console.warn('Dodo checkoutUrl alınamadı.');
+      document.getElementById('pwLoading').classList.remove('show');
+      return;
+    }
+    await DodoPaymentsCheckout.DodoPayments.Checkout.open({ checkoutUrl });
+  } catch (e) {
+    console.warn('Checkout başlatma hatası:', e);
+    document.getElementById('pwLoading').classList.remove('show');
+  }
 }
 
-// --- 8) Paddle olaylarını dinle (ödeme tamamlandığında durumu güncelle) ---
-function handlePaddleEvent(event) {
-  if (!event || event.name !== 'checkout.completed') return;
-  const custom = (event.data && event.data.custom_data) || {};
-  if (custom.kind === 'subscription' || custom.kind === 'subscription_monthly' || custom.kind === 'subscription_yearly') {
-    markSubscribed();
-  } else if (custom.kind === 'single' && custom.itemId) {
-    markItemUnlocked(custom.itemId, custom.birthDateKey);
+// --- 8) Dodo Payments olaylarını dinle (ödeme tamamlandığında durumu güncelle) ---
+// ÖNEMLİ: Bu olaylar yalnızca AYNI SEKMEDEKİ anlık kilit açma / arayüz
+// güncellemesi içindir (iyi niyetli kullanıcı deneyimi). Kalıcı ve GÜVENLİ
+// kayıt her zaman /api/dodo-webhook.js -> Supabase üzerinden, imzası
+// sunucu tarafında doğrulanmış şekilde yapılır (bkz. o dosyadaki not).
+function onDodoEvent(event) {
+  if (!event || !event.event_type) return;
+
+  if (event.event_type === 'checkout.opened') {
+    document.getElementById('pwLoading').classList.remove('show');
+    return;
   }
-  // Satın alımı, kullanıcı giriş yapmışsa Supabase'deki hesabına kalıcı olarak
-  // kaydet — böylece tarayıcı kapatılsa, çıkış yapılsa veya başka bir cihazdan
-  // girilse bile erişim kaybolmaz (bkz. savePurchaseToSupabase üstündeki not).
-  if (custom.userId) {
-    savePurchaseToSupabase(custom.kind, custom.itemId, event.data && event.data.items && event.data.items[0] ? event.data.items[0].price_id : null, custom.birthDateKey);
+
+  if (event.event_type === 'checkout.error') {
+    document.getElementById('pwLoading').classList.remove('show');
+    console.warn('Dodo checkout hatası:', event.data && event.data.message);
+    return;
   }
-  closePaywallModal();
-  // Kilit durumundaki değişikliği yansıtmak için sayfayı/sonucu yeniden çiz:
-  if (typeof hesapla === 'function') {
-    try { hesapla(); } catch (e) { /* no-op */ }
+
+  if (event.event_type === 'checkout.success' || event.event_type === 'checkout.completed') {
+    const kind = pendingCheckoutKind;
+    if (kind === 'subscription_monthly' || kind === 'subscription_yearly') {
+      markSubscribed();
+    } else if (kind === 'single' && currentPaywallItemId) {
+      markItemUnlocked(currentPaywallItemId, pendingPurchaseDateKey || currentBirthDateKey);
+    }
+    closePaywallModal();
+    // Kilit durumundaki değişikliği yansıtmak için sayfayı/sonucu yeniden çiz:
+    if (typeof hesapla === 'function') {
+      try { hesapla(); } catch (e) { /* no-op */ }
+    }
+    // Giriş yapmış kullanıcılar için: webhook'un Supabase'e yazması birkaç
+    // saniye sürebilir; kısa bir gecikmeyle senkronu tetikleyip diğer
+    // cihazlar/oturumlar için de kalıcılığı garanti altına alıyoruz.
+    if (currentUser && typeof syncPurchasesFromSupabase === 'function') {
+      setTimeout(() => { try { syncPurchasesFromSupabase(); } catch (e) { /* no-op */ } }, 4000);
+    }
+    pendingCheckoutKind = null;
   }
 }
 

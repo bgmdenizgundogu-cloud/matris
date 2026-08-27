@@ -1,0 +1,10 @@
+{
+  "name": "destiny-chart-matrix",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Vercel Serverless Functions for Dodo Payments checkout + webhook. The static site (index.html and friends) is unaffected by this file.",
+  "dependencies": {
+    "standardwebhooks": "^1.0.0"
+  }
+}
