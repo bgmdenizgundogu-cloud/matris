@@ -325,6 +325,7 @@
   .pw-offer-banner.pw-offer-banner-monthly{ background:linear-gradient(135deg,#5cb87e,#469c68); }
   .pw-offer-banner{ position:absolute; top:0; left:0; right:0; background:linear-gradient(135deg,#1a8a3e,#0f6b2c); color:#fff; font-size:.72rem; font-weight:800; text-align:center; padding:6px 10px; border-radius:10px 10px 0 0; letter-spacing:.01em; }
   .pw-option-yearly .pw-option-title{ margin-top:4px; font-size:1.05rem; }
+  .pw-access-benefit{ font-size:.82rem; color:var(--muted); margin-top:4px; }
   .pw-price-per-month{ font-size:1.7rem; font-weight:800; color:#12365e; margin-top:6px; }
   .pw-price-strike-row{ display:flex; align-items:center; gap:8px; margin-top:6px; font-size:1.05rem; flex-wrap:wrap; }
   .pw-price-strike{ color:#a89e8c; text-decoration:line-through; font-size:.92rem; }
@@ -446,6 +447,7 @@
       <button class="pw-option green recommended pw-option-yearly" onclick="handleBuyClick('subscription_yearly')">
         <div class="pw-offer-banner" data-i18n="pw_yearly_banner">🔥 SINIRLI SÜRELİ TEKLİF — %30 İNDİRİM</div>
         <div class="pw-option-title"><span data-i18n="pw_sub_yearly_title">Yıllık Erişim</span></div>
+        <div class="pw-access-benefit" data-i18n="pw_yearly_benefit">Tüm bölümlere 1 yıl boyunca sınırsız erişim kazanın</div>
         <div class="pw-price-per-month" data-i18n="pw_yearly_per_month">299 ₺ / ay</div>
         <div class="pw-price-strike-row">
           <span class="pw-price-strike" data-i18n="pw_yearly_was">4.899 ₺</span>
@@ -458,6 +460,7 @@
       <button class="pw-option pw-option-monthly pw-option-monthly-discount" onclick="handleBuyClick('subscription_monthly')">
         <div class="pw-offer-banner pw-offer-banner-monthly" data-i18n="pw_monthly_banner">🔥 SINIRLI SÜRELİ TEKLİF — %50 İNDİRİM</div>
         <div class="pw-option-title"><span data-i18n="pw_sub_monthly_title">Aylık Erişim</span></div>
+        <div class="pw-access-benefit" data-i18n="pw_monthly_benefit">Tüm bölümlere 1 ay boyunca sınırsız erişim kazanın</div>
         <div class="pw-price-strike-row">
           <span class="pw-price-strike" data-i18n="pw_monthly_was">1.499 ₺</span>
           <span class="pw-price-arrow">👉</span>
@@ -1315,11 +1318,13 @@ const UI_STRINGS = {
   pw_yearly_now: { tr: '3.399 ₺', en: '$69.99' },
   pw_yearly_discount_badge: { tr: '%30 İNDİRİM', en: '30% OFF' },
   pw_yearly_billing_note: { tr: '(Yıllık faturalandırılır • İstediğiniz zaman iptal edin)', en: '(Billed annually • Cancel anytime)' },
+  pw_yearly_benefit: { tr: 'Tüm bölümlere 1 yıl boyunca sınırsız erişim kazanın', en: 'Get unlimited access to all sections for 1 year' },
   pw_monthly_banner: { tr: '🔥 SINIRLI SÜRELİ TEKLİF — %50 İNDİRİM', en: '🔥 LIMITED TIME OFFER - 50% OFF' },
   pw_monthly_was: { tr: '1.499 ₺', en: '$29.99' },
   pw_monthly_discount_badge: { tr: '%50 İNDİRİM', en: '50% OFF' },
   pw_monthly_per_month: { tr: '799 ₺ / ay', en: '$14.99 / month' },
   pw_monthly_billing_note: { tr: 'Aylık faturalandırılır', en: 'Billed monthly' },
+  pw_monthly_benefit: { tr: 'Tüm bölümlere 1 ay boyunca sınırsız erişim kazanın', en: 'Get unlimited access to all sections for 1 month' },
   pw_single_title: { tr: 'Sadece Bu Bölümü Aç', en: 'Unlock Just This Section' },
   pw_single_desc: { tr: 'Yalnızca bu bölümün kilidini tek seferlik ödeme ile açın.', en: 'Unlock only this section with a one-time payment.' },
   pw_single_scope_note: { tr: '🔓 Bu tarihe özel kalıcı erişim: Bir kez satın alın, bu doğum tarihi için istediğiniz zaman tekrar girip okuyabilir ve PDF\'ini indirebilirsiniz.', en: '🔓 Permanent access for this date: Buy once, and come back anytime to re-read this analysis for this birth date and download its PDF.' },
