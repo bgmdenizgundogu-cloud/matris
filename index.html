@@ -24229,6 +24229,21 @@ async function startCheckout(kind) {
 // güncellemesi içindir (iyi niyetli kullanıcı deneyimi). Kalıcı ve GÜVENLİ
 // kayıt her zaman /api/dodo-webhook.js -> Supabase üzerinden, imzası
 // sunucu tarafında doğrulanmış şekilde yapılır (bkz. o dosyadaki not).
+// DÜZELTME: dodopayments-checkout paketinin (jsDelivr'daki gerçek dağıtım
+// dosyası) kaynağı incelendi — SDK'nın onEvent'e iletebileceği event_type
+// beyaz listesinde 'checkout.success' ya da 'checkout.completed' DİYE BİR
+// ŞEY YOK (bkz. SDK içindeki Set: checkout.opened/payment_page_opened/
+// customer_details_submitted/closed/error/redirect/resize/breakdown/
+// link_expired/status/redirect_requested/pay_button_clicked/keys_provided/
+// form_ready). Bu isimleri bekleyen aşağıdaki blok bu yüzden HİÇBİR ZAMAN
+// çalışmıyordu — aynı sekmede anlık kilit açma hiç tetiklenmiyordu. SDK
+// başarılı ödemede bunun yerine gerçek ödeme durumunu 'checkout.status'
+// olayının payload'ında (data.status ya da data.paymentIntent.status)
+// taşıyor ve hemen ardından SAYFAYI KENDİSİ (window.top / window.location
+// ile, biz engelleyemeyiz) return_url'e yönlendiriyor. O yüzden burada
+// SADECE gerçekten "başarılı" bir durum bildirildiğinde iyi niyetli/anlık
+// bir güncelleme yapıyoruz; birazdan sayfa zaten yeniden yüklenecek ve asıl
+// güvenli/kalıcı kontrol checkPendingGuestPurchase() üzerinden devam edecek.
 function onDodoEvent(event) {
   if (!event || !event.event_type) return;
 
@@ -24243,7 +24258,10 @@ function onDodoEvent(event) {
     return;
   }
 
-  if (event.event_type === 'checkout.success' || event.event_type === 'checkout.completed') {
+  if (event.event_type === 'checkout.status') {
+    const rawStatus = (event.data && (event.data.status || (event.data.paymentIntent && event.data.paymentIntent.status))) || '';
+    const isSuccessStatus = ['succeeded', 'success', 'completed', 'paid'].includes(String(rawStatus).toLowerCase());
+    if (!isSuccessStatus) return;
     const kind = pendingCheckoutKind;
     let unlockedItemId = null;
     if (kind === 'subscription_monthly' || kind === 'subscription_yearly') {
