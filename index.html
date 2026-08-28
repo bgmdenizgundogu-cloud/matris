@@ -417,6 +417,20 @@
   .dev-panel-btn:hover{ filter:brightness(1.12); }
   .dev-panel-btn-green{ background:#1a8a3e; }
   .dev-panel-btn-red{ background:#b8322c; }
+
+  /* ---------- Temel kopya-karşıtı önlemler (anti-copy) ---------- */
+  /* Metin seçimi site genelinde kapatılır; form alanları (yazma, düzeltme,
+     kopyala/yapıştır gerektiren her yer: giriş/kayıt, isim, doğum tarihi,
+     bağımsız modüllerin kendi tarih alanları vb.) buna dahil DEĞİLDİR —
+     aşağıdaki JS tarafındaki engellemeler de aynı mantıkla input/textarea/
+     select/[contenteditable] üzerinde devre dışı bırakılır. window.print()
+     ile PDF indirme, user-select'ten etkilenmediği için bozulmaz. */
+  body{
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none;
+  }
+  input, textarea, select, [contenteditable="true"], [contenteditable=""]{
+    -webkit-user-select:text !important; -moz-user-select:text !important; -ms-user-select:text !important; user-select:text !important;
+  }
 </style>
 </head>
 <body>
@@ -24455,6 +24469,79 @@ updateConnectionStatus();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
 }
+</script>
+
+<!-- ---------- Temel kopya-karşıtı / caydırıcı önlemler ----------
+     ÖNEMLİ: Bu blok SADECE ekleme amaçlıdır — sayfadaki hiçbir mevcut
+     fonksiyonu, olay dinleyicisini veya iş mantığını (ödeme, hesaplama,
+     formlar, giriş/kayıt, PDF indirme, dil değiştirme) değiştirmez/silmez.
+     Tüm engellemeler input/textarea/select/[contenteditable] alanlarında
+     ve varsayılan olarak Ctrl+V (yapıştırma), Ctrl+P (yazdırma/PDF) ve
+     Ctrl+A gibi kısayollarda devre dışıdır; bu yüzden giriş/kayıt, isim,
+     doğum tarihi alanları ve "PDF indir" (window.print()) tamamen normal
+     çalışmaya devam eder. Bunlar caydırıcı, TEMEL önlemlerdir; tarayıcı
+     geliştirici araçlarını teknik olarak %100 engellemek mümkün değildir. -->
+<script>
+(function(){
+  function isEditableTarget(el){
+    if (!el) return false;
+    var tag = el.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return true;
+    if (el.isContentEditable) return true;
+    return false;
+  }
+
+  // 1) Sağ tık menüsünü engelle (form alanlarında "Yapıştır" vb. için hariç tut).
+  document.addEventListener('contextmenu', function(e){
+    if (isEditableTarget(e.target)) return;
+    e.preventDefault();
+  }, true);
+
+  // 2) Metin seçimini (fare ile sürükleyerek seçme) engelle.
+  document.addEventListener('selectstart', function(e){
+    if (isEditableTarget(e.target)) return;
+    e.preventDefault();
+  }, true);
+
+  // 3) Metin/görsel sürüklemeyi engelle (ek caydırıcı önlem).
+  document.addEventListener('dragstart', function(e){
+    if (isEditableTarget(e.target)) return;
+    e.preventDefault();
+  }, true);
+
+  // 4) Kopyala / kes işlemini engelle (Ctrl+C, sağ tık > Kopyala, menü > Kopyala
+  //    dahil — hangi yoldan tetiklendiğine bakılmaksızın tarayıcının 'copy'
+  //    olayını engellemek, sadece Ctrl+C tuşunu dinlemekten daha güvenilirdir).
+  ['copy', 'cut'].forEach(function(evtName){
+    document.addEventListener(evtName, function(e){
+      if (isEditableTarget(e.target) || isEditableTarget(document.activeElement)) return;
+      e.preventDefault();
+    }, true);
+  });
+
+  // 5) F12 / Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C / Ctrl+U ile geliştirici
+  //    araçlarını / kaynak görünümünü açmayı zorlaştır. Ctrl+V, Ctrl+P, Ctrl+A,
+  //    Ctrl+F gibi diğer tüm kısayollar dokunulmadan bırakılır.
+  document.addEventListener('keydown', function(e){
+    var key = (e.key || '').toLowerCase();
+    var ctrlOrCmd = e.ctrlKey || e.metaKey;
+    var isDevToolsShortcut =
+      key === 'f12' ||
+      (ctrlOrCmd && e.shiftKey && (key === 'i' || key === 'j' || key === 'c')) ||
+      (ctrlOrCmd && key === 'u');
+    if (isDevToolsShortcut) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+
+  // 6) Konsola caydırıcı bir uyarı yaz.
+  try {
+    console.log('%c⚠ DUR!', 'color:#b8322c; font-size:46px; font-weight:900;');
+    console.log('%cBurası tarayıcının geliştirici konsoludur. Biri sana buraya bir şey yapıştırıp "çalıştır" demeni söylediyse, bu büyük ihtimalle hesabını veya kişisel verilerini ele geçirmeye çalışan bir dolandırıcılıktır. Ne yaptığını bilmiyorsan hiçbir kod yapıştırma ve bu paneli kapat.', 'color:#12365e; font-size:15px; font-weight:600;');
+    console.log('%c© Destiny Chart Matrix — içerik izinsiz kopyalanamaz.', 'color:#4d6d8f; font-size:12px;');
+  } catch (e) { /* no-op */ }
+})();
 </script>
 </body>
 </html>
