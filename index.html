@@ -24276,16 +24276,57 @@ function onDodoEvent(event) {
 // GERÇEKTEN başarılı olarak işleyip işlemediğini sorar. Sadece sunucu
 // "evet, ödendi" derse kilit açılır — sayfanın kendisi asla kör güvenle
 // (sadece "checkout başlatılmıştı" diye) kilit açmaz.
-// Ödeme s\u0131ras\u0131nda sayfa tamamen yenilenip do\u011fum tarihi alanlar\u0131 bo\u015falm\u0131\u015fsa
-// (\u00f6rn. 3D Secure y\u00f6nlendirmesi), sat\u0131n alma an\u0131nda kullan\u0131lan tarihi geri
-// doldurup hesaplamay\u0131 otomatik olarak tekrar \u00e7al\u0131\u015ft\u0131r\u0131r \u2014 b\u00f6ylece a\u00e7\u0131lan
-// b\u00f6l\u00fcm ger\u00e7ekten g\u00f6r\u00fcnt\u00fclenebilir olur. Zaten bir sonu\u00e7 g\u00f6r\u00fcn\u00fcyorsa (kullan\u0131c\u0131
-// hala ayn\u0131 sekmedeyse) hi\u00e7bir \u015feye dokunmaz.
-function restoreBirthDateAndRecalculateIfNeeded(birthDateKey) {
+// Odeme sirasinda sayfa tamamen yenilenip dogum tarihi alanlari bosalmissa
+// (orn. 3D Secure yonlendirmesi), satin alma aninda kullanilan tarihi geri
+// doldurup hesaplamayi otomatik olarak tekrar calistirir - boylece acilan
+// bolum gercekten goruntulenebilir olur. Zaten bir sonuc gorunuyorsa (kullanici
+// hala ayni sekmedeyse) hicbir seye dokunmaz.
+// ONEMLI (bkz. checkPendingGuestPurchase icindeki cagri): kendi dogum tarihi
+// alanlarina sahip bagimsiz moduller icin (INDEPENDENT_MODULE_BIRTHDATE_FIELDS
+// - Yillik/Aylik/Gunluk Ongoru, Cocuk Matrisi, Yillik Saglik, Uyum Haritasi,
+// Partner Ozel Gun) tarih anahtari ANA matrisin #d/#m/#y alanlarina ait
+// DEGILDIR - modulun kendi alanlarina yazilmalidir; iki kisilik modullerde
+// (mt18/mt20) anahtar '|' ile ayrilmis iki tarih icerir ve duz split('-')
+// ile ASLA 3 parcaya bolunmez (bu yuzden eski kod hicbir sey yapmadan false
+// donuyordu, sayfa da giris ekraninda takili kaliyordu - bu fonksiyonun
+// duzeltilme sebebi budur). Bu durumu itemId parametresiyle tespit edip,
+// zaten dogru calisan ve "Satin Aldiginiz Tarihe Geri Don" butonlarinin
+// kullandigi "<itemId>RestorePurchasedDate" fonksiyonuna (orn.
+// mt23RestorePurchasedDate, mt20RestorePurchasedDate) devrediyoruz. O
+// fonksiyonlar modulun kendi alanlarinin DOM'da var olmasini gerektirir;
+// bu alanlar ana accordion ilk kez cizilmeden (hesapla() en az bir kez
+// calismadan) mevcut olmadigi icin once ana matrisi mevcut/varsayilan bir
+// tarihle hesaplayip accordion'u insa ediyoruz.
+function restoreBirthDateAndRecalculateIfNeeded(birthDateKey, itemId) {
   if (!birthDateKey) return false;
   const resultsPage = document.getElementById('resultsPage');
   const alreadyShowing = resultsPage && resultsPage.style.display !== 'none';
   if (alreadyShowing) return false;
+  if (typeof hesapla !== 'function') return false;
+
+  if (itemId && typeof INDEPENDENT_MODULE_BIRTHDATE_FIELDS !== 'undefined' && INDEPENDENT_MODULE_BIRTHDATE_FIELDS[itemId]) {
+    const restoreFn = window[itemId + 'RestorePurchasedDate'];
+    if (typeof restoreFn !== 'function') return false;
+    const dEl = document.getElementById('d'), mEl = document.getElementById('m'), yEl = document.getElementById('y');
+    if (!dEl || !mEl || !yEl) return false;
+    try {
+      // Ana accordion (dolayisiyla modulun kendi alanlari) henuz cizilmediyse
+      // once onu insa ediyoruz - mevcut ana tarih gecerliyse onu kullaniyoruz,
+      // degilse bugunun tarihini yaziyoruz. Bu SADECE DOM'u insa etmek
+      // icindir; hemen ardindan restoreFn() modulun KENDI tarihini yazip
+      // kendi hesaplama fonksiyonunu (ve dolayisiyla kendi kilit kontrolunu)
+      // calistiracak.
+      if (!gecerliTarihMi(parseInt(dEl.value, 10), parseInt(mEl.value, 10), parseInt(yEl.value, 10))) {
+        if (typeof bugununTarihiniDoldur === 'function') bugununTarihiniDoldur();
+      }
+      hesapla();
+      restoreFn(birthDateKey);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   const dEl = document.getElementById('d'), mEl = document.getElementById('m'), yEl = document.getElementById('y');
   if (!dEl || !mEl || !yEl) return false;
   const parts = String(birthDateKey).split('-');
@@ -24293,7 +24334,6 @@ function restoreBirthDateAndRecalculateIfNeeded(birthDateKey) {
   dEl.value = parts[0];
   mEl.value = parts[1];
   yEl.value = parts[2];
-  if (typeof hesapla !== 'function') return false;
   try {
     hesapla();
     return true;
@@ -24336,7 +24376,7 @@ async function checkPendingGuestPurchase(attempt) {
       // önce, satın alma anında kullanılan tarihi geri dolduruyoruz.
       let recalculated = false;
       if (pending.kind === 'single' && pending.birthDateKey) {
-        recalculated = restoreBirthDateAndRecalculateIfNeeded(pending.birthDateKey);
+        recalculated = restoreBirthDateAndRecalculateIfNeeded(pending.birthDateKey, pending.itemId);
       }
       if (!recalculated && typeof hesapla === 'function') {
         try { hesapla(); } catch (e) { /* no-op */ }
