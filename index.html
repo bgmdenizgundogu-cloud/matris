@@ -188,6 +188,16 @@
     body{ padding:calc(10px + env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) calc(36px + env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)); }
     .top-nav{ position:sticky; top:max(6px, env(safe-area-inset-top)); z-index:20; justify-content:flex-start; flex-wrap:nowrap; gap:16px; margin-bottom:26px; padding:11px 14px; overflow-x:auto; overflow-y:visible; overscroll-behavior-x:contain; scrollbar-width:none; border-radius:26px; }
     .top-nav::-webkit-scrollbar{ display:none; }
+    /* .top-nav'ın kendi yatay kaydırma çubuğu (overflow-x:auto) için — CSS
+       kuralı gereği overflow-y:visible tek başına bir işe yaramaz, tarayıcı
+       overflow-x auto olduğunda overflow-y'yi de fiilen 'auto' gibi işler
+       (bkz. CSS Overflow Module) — bazı mobil tarayıcılarda bu, içindeki
+       position:fixed açılır menüyü (.nav-links.open) kırpabiliyor/yanlış
+       konumlandırabiliyor. Menü açıkken bu kırpma riskini tamamen ortadan
+       kaldırmak için overflow'u geçici olarak devre dışı bırakıyoruz (bkz.
+       toggleMobileNav() - 'nav-menu-open' sınıfını ekleyip kaldırıyor).
+       Menü kapalıyken hiçbir görsel etkisi yoktur. */
+    .top-nav.nav-menu-open{ overflow:visible; }
     .top-nav .nav-logo,.top-nav .nav-item,.top-nav .lang-toggle-btn,.top-nav .install-btn,.top-nav .nav-login,.nav-hamburger,.top-nav .nav-signup,.nav-account-wrap{ flex:0 0 auto; }
     .top-nav .nav-login{ margin-left:0; }
     .top-nav .lang-toggle-btn{ margin-left:0; margin-right:0; min-height:38px; }
@@ -9416,7 +9426,7 @@ function filterSections(indexes, navKey){
       el.classList.toggle('active', el.getAttribute('data-i18n') === navKey);
     });
   }
-  document.querySelectorAll('.top-nav .nav-links.open').forEach(l => l.classList.remove('open'));
+  document.querySelectorAll('.top-nav .nav-links.open').forEach(l => { l.classList.remove('open'); const n = l.closest('.top-nav'); if (n) n.classList.remove('nav-menu-open'); });
   const acc = document.getElementById('mainAccordion');
   if(acc) acc.scrollIntoView({ behavior:'smooth', block:'start' });
 }
@@ -9764,7 +9774,7 @@ function showEgitimlerPage(){
   document.querySelectorAll('.top-nav .nav-item[data-i18n]').forEach(el => {
     el.classList.toggle('active', el.getAttribute('data-i18n') === 'nav_trainings');
   });
-  document.querySelectorAll('.top-nav .nav-links.open').forEach(l => l.classList.remove('open'));
+  document.querySelectorAll('.top-nav .nav-links.open').forEach(l => { l.classList.remove('open'); const n = l.closest('.top-nav'); if (n) n.classList.remove('nav-menu-open'); });
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
@@ -23119,8 +23129,14 @@ function toggleMobileNav(linksId, btnEl) {
   if (!links) return;
   const isOpen = links.classList.toggle('open');
   if (btnEl) btnEl.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  const nav = links.closest('.top-nav');
+  // .top-nav'ın dar ekranlarda kendi üzerinde taşıdığı overflow-x:auto,
+  // içindeki position:fixed açılır menüyü bazı mobil tarayıcılarda
+  // kırpabildiği/yanlış konumlandırabildiği için (bkz. yukarıdaki CSS
+  // yorumu), menü açık olduğu sürece bunu geçici olarak devre dışı
+  // bırakıyoruz.
+  if (nav) nav.classList.toggle('nav-menu-open', isOpen);
   if (isOpen) {
-    const nav = links.closest('.top-nav');
     if (nav) {
       const rect = nav.getBoundingClientRect();
       links.style.top = (rect.bottom + 8) + 'px';
@@ -23141,7 +23157,7 @@ document.addEventListener('click', (e) => {
     document.querySelectorAll('.nav-account-menu.open').forEach(m => m.classList.remove('open'));
   }
   if (!e.target.closest('.nav-links') && !e.target.closest('.nav-hamburger')) {
-    document.querySelectorAll('.top-nav .nav-links.open').forEach(l => l.classList.remove('open'));
+    document.querySelectorAll('.top-nav .nav-links.open').forEach(l => { l.classList.remove('open'); const n = l.closest('.top-nav'); if (n) n.classList.remove('nav-menu-open'); });
   }
 });
 
