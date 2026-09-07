@@ -432,6 +432,19 @@
   input, textarea, select, [contenteditable="true"], [contenteditable=""]{
     -webkit-user-select:text !important; -moz-user-select:text !important; -ms-user-select:text !important; user-select:text !important;
   }
+
+  /* ---------- Eğitimler (Trainings) bölümü ---------- */
+  .egitimler-hero{ text-align:center; padding:14px 4px 6px; }
+  .egitimler-hero h1{ margin:0 0 8px; font-size:1.7rem; color:var(--gold-deep); }
+  .egitimler-hero p{ margin:0 auto; max-width:640px; font-size:.92rem; color:var(--muted); line-height:1.55; }
+  .egitimler-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px; margin:26px auto 10px; max-width:900px; padding:0 4px; }
+  .egitimler-card{ border:2px solid #e6d9bd; border-radius:14px; padding:20px 18px; background:#fff; text-align:left; transition:border-color .15s, box-shadow .15s; }
+  .egitimler-card:hover{ border-color:var(--gold); box-shadow:0 8px 22px rgba(18,54,94,.1); }
+  .egitimler-card-icon{ font-size:1.8rem; margin-bottom:8px; }
+  .egitimler-card h3{ margin:0 0 8px; font-size:1.05rem; color:var(--ink); }
+  .egitimler-card p{ margin:0 0 16px; font-size:.86rem; color:var(--muted); line-height:1.5; }
+  .egitimler-card-btn{ display:inline-block; background:linear-gradient(135deg,#2f6fae,#12365e); color:#fff; font-weight:700; font-size:.86rem; padding:10px 18px; border-radius:999px; text-decoration:none; }
+  .egitimler-card-btn:hover{ filter:brightness(1.08); }
 </style>
 </head>
 <body>
@@ -601,6 +614,7 @@
       <span class="nav-item" data-i18n="nav_children" style="cursor:pointer;" onclick="filterSections(['mt21'], 'nav_children')">ÇOCUK</span>
       <span class="nav-item" data-i18n="nav_yearly" style="cursor:pointer;" onclick="filterSections(['mt13','mt14','mt15','mt16','mt17','mt23'], 'nav_yearly')">DÖNEMSEL ANALİZ</span>
       <span class="nav-item" data-i18n="nav_extra" style="cursor:pointer;" onclick="filterSections(['mt12','mt22','mt23'], 'nav_extra')">EK HESAPLAMALAR</span>
+      <span class="nav-item" data-i18n="nav_trainings" style="cursor:pointer;" onclick="showEgitimlerPage()">EĞİTİMLER</span>
     </div>
     <button class="lang-toggle-btn" onclick="toggleLanguage()" title="Switch to English">EN</button>
     <button class="install-btn" type="button">Uygulamayı Yükle</button>
@@ -678,6 +692,7 @@
       <span class="nav-item" data-i18n="nav_children" style="cursor:pointer;" onclick="filterSections(['mt21'], 'nav_children')">ÇOCUK</span>
       <span class="nav-item" data-i18n="nav_yearly" style="cursor:pointer;" onclick="filterSections(['mt13','mt14','mt15','mt16','mt17','mt23'], 'nav_yearly')">DÖNEMSEL ANALİZ</span>
       <span class="nav-item" data-i18n="nav_extra" style="cursor:pointer;" onclick="filterSections(['mt12','mt22','mt23'], 'nav_extra')">EK HESAPLAMALAR</span>
+      <span class="nav-item" data-i18n="nav_trainings" style="cursor:pointer;" onclick="showEgitimlerPage()">EĞİTİMLER</span>
     </div>
     <button class="lang-toggle-btn" onclick="toggleLanguage()" title="Switch to English">EN</button>
     <button class="install-btn" type="button">Uygulamayı Yükle</button>
@@ -935,6 +950,56 @@
   </div>
 
   <div class="accordion" id="mainAccordion"></div>
+</div>
+
+<div id="egitimlerPage" style="display:none;">
+  <nav class="top-nav">
+    <span class="nav-logo" aria-label="Ana sayfa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span>
+    <button class="nav-hamburger" type="button" aria-label="Menü" aria-expanded="false" onclick="toggleMobileNav('navLinks3', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="nav-links" id="navLinks3">
+      <span class="nav-item" data-i18n="nav_home" style="cursor:pointer;" onclick="filterSections('all', 'nav_home')">KADER MATRİSİ</span>
+      <span class="nav-item" data-i18n="nav_finance" style="cursor:pointer;" onclick="filterSections(['mt2','mt4'], 'nav_finance')">FİNANS</span>
+      <span class="nav-item" data-i18n="nav_love" style="cursor:pointer;" onclick="filterSections(['mt5','mt18','mt20'], 'nav_love')">İLİŞKİ ANALİZİ</span>
+      <span class="nav-item" data-i18n="nav_children" style="cursor:pointer;" onclick="filterSections(['mt21'], 'nav_children')">ÇOCUK</span>
+      <span class="nav-item" data-i18n="nav_yearly" style="cursor:pointer;" onclick="filterSections(['mt13','mt14','mt15','mt16','mt17','mt23'], 'nav_yearly')">DÖNEMSEL ANALİZ</span>
+      <span class="nav-item" data-i18n="nav_extra" style="cursor:pointer;" onclick="filterSections(['mt12','mt22','mt23'], 'nav_extra')">EK HESAPLAMALAR</span>
+      <span class="nav-item" data-i18n="nav_trainings" style="cursor:pointer;" onclick="showEgitimlerPage()">EĞİTİMLER</span>
+    </div>
+    <button class="lang-toggle-btn" onclick="toggleLanguage()" title="Switch to English">EN</button>
+    <button class="install-btn" type="button">Uygulamayı Yükle</button>
+    <span class="nav-login" data-i18n="nav_login" style="cursor:pointer;" onclick="openAuthModal('signin')">Giriş</span>
+    <button class="nav-signup" type="button" data-i18n="nav_signup" onclick="openAuthModal('signup')">Kayıt Ol</button>
+    <div class="nav-account-wrap">
+      <button class="nav-account-btn" id="navAccountBtn3" onclick="toggleAccountMenu('navAccountMenu3')">
+        <span class="nav-account-avatar" id="navAccountAvatar3">•</span>
+        <span id="navAccountLabel3"></span>
+      </button>
+      <div class="nav-account-menu" id="navAccountMenu3">
+        <div class="nav-account-email" id="navAccountEmail3"></div>
+        <button onclick="openAccountPanel('charts')" data-i18n="acc_menu_charts">My Destiny Charts</button>
+        <button onclick="openAccountPanel('readings')" data-i18n="acc_menu_readings">Saved Readings</button>
+        <button onclick="openAccountPanel('subscription')" data-i18n="acc_menu_subscription">Subscription &amp; Purchases</button>
+        <button onclick="openAccountPanel('settings')" data-i18n="acc_menu_settings">Account Settings</button>
+        <button class="signout-btn" onclick="authSignOut()" data-i18n="acc_menu_signout">Sign Out</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="egitimler-hero">
+    <h1 data-i18n="egitimler_heading">Eğitimler</h1>
+    <p data-i18n="egitimler_sub">Kader Matrisi bilginizi derinleştirecek, kendi hızınızda ilerleyebileceğiniz rehberler.</p>
+  </div>
+
+  <div class="egitimler-grid">
+    <div class="egitimler-card">
+      <div class="egitimler-card-icon" aria-hidden="true">💎</div>
+      <h3 data-i18n="egitim_sayisifa_title">Sayı ve Şifa Taşları</h3>
+      <p data-i18n="egitim_sayisifa_desc">1'den 22'ye kadar 22 Kader Matrisi enerjisini; her birinin karmik dersini, tarot arketipini ve eşlik eden şifa taşını anlatan kapsamlı bir rehber. Kendi doğum (karma) sayınızı bulun ve o sayfayı okuyun.</p>
+      <a class="egitimler-card-btn" href="/public/egitimler/sayi-ve-sifa-taslari-tr.pdf" data-i18n-href="egitim_sayisifa_pdf_href" data-i18n="egitim_view_pdf" target="_blank" rel="noopener">PDF'i Görüntüle</a>
+    </div>
+  </div>
 </div>
 </div>
 
@@ -1236,6 +1301,7 @@ const UI_STRINGS = {
   nav_children: { tr: 'ÇOCUK', en: 'CHILD' },
   nav_yearly: { tr: 'DÖNEMSEL ANALİZ', en: 'PERIODIC ANALYSIS' },
   nav_extra: { tr: 'SAĞLIK', en: 'HEALTH' },
+  nav_trainings: { tr: 'EĞİTİMLER', en: 'TRAININGS' },
   nav_login: { tr: 'Giriş', en: 'Log In' },
   nav_signup: { tr: 'Kayıt Ol', en: 'Sign Up' },
   acc_menu_charts: { tr: 'Analiz Matrisi Haritalarım', en: 'My Destiny Charts' },
@@ -1243,6 +1309,12 @@ const UI_STRINGS = {
   acc_menu_subscription: { tr: 'Abonelik ve Satın Alımlar', en: 'Subscription & Purchases' },
   acc_menu_settings: { tr: 'Hesap Ayarları', en: 'Account Settings' },
   acc_menu_signout: { tr: 'Çıkış Yap', en: 'Sign Out' },
+  egitimler_heading: { tr: 'Eğitimler', en: 'Trainings' },
+  egitimler_sub: { tr: 'Kader Matrisi bilginizi derinleştirecek, kendi hızınızda ilerleyebileceğiniz rehberler.', en: 'Guides to deepen your Destiny Matrix knowledge, at your own pace.' },
+  egitim_sayisifa_title: { tr: 'Sayı ve Şifa Taşları', en: 'Numbers & Healing Stones' },
+  egitim_sayisifa_desc: { tr: '1\'den 22\'ye kadar 22 Kader Matrisi enerjisini; her birinin karmik dersini, tarot arketipini ve eşlik eden şifa taşını anlatan kapsamlı bir rehber. Kendi doğum (karma) sayınızı bulun ve o sayfayı okuyun.', en: 'A complete guide to all 22 Destiny Matrix energies (1 to 22) — each with its karmic lesson, tarot archetype, and accompanying healing stone. Find your own birth (karma) number and read your page.' },
+  egitim_view_pdf: { tr: 'PDF\'i Görüntüle', en: 'View PDF' },
+  egitim_sayisifa_pdf_href: { tr: '/public/egitimler/sayi-ve-sifa-taslari-tr.pdf', en: '/public/egitimler/sayi-ve-sifa-taslari-en.pdf' },
   footer_brand_title: { tr: 'Destiny Chart Matrix', en: 'Destiny Chart Matrix' },
   footer_disclaimer: { tr: 'Destiny Chart Matrix sadece bilgilendirme, eğitim ve eğlence amaçlıdır; tıbbi, psikolojik, hukuki veya finansal tavsiye sağlamaz. Platformumuz herhangi bir hastalığı veya tıbbi durumu teşhis etmez, tedavi etmez, iyileştirmez veya önlemez; profesyonel tıbbi veya psikolojik bakımın yerini asla almamalıdır. Sağlık sorunları olan kullanıcılar nitelikli bir doktora veya sağlık uzmanına danışmalıdır.', en: 'Destiny Chart Matrix is intended for informational, educational, and entertainment purposes only; it does not provide medical, psychological, legal, or financial advice. Our platform does not diagnose, treat, cure, or prevent any illness or medical condition, and should never replace professional medical or psychological care. Users with health concerns should consult a qualified doctor or healthcare professional.' },
   footer_copyright: { tr: '© 2026 Destiny Chart Matrix. Tüm Hakları Saklıdır.', en: '© 2026 Destiny Chart Matrix. All Rights Reserved.' },
@@ -2130,6 +2202,11 @@ function applyStaticTranslations() {
     const key = el.getAttribute('data-i18n-aria');
     const entry = UI_STRINGS[key];
     if (entry) el.setAttribute('aria-label', (currentLang === 'en') ? entry.en : entry.tr);
+  });
+  document.querySelectorAll('[data-i18n-href]').forEach(function(el) {
+    const key = el.getAttribute('data-i18n-href');
+    const entry = UI_STRINGS[key];
+    if (entry) el.setAttribute('href', (currentLang === 'en') ? entry.en : entry.tr);
   });
   const titleEntry = UI_STRINGS['page_title'];
   if (titleEntry) document.title = (currentLang === 'en') ? titleEntry.en : titleEntry.tr;
@@ -9314,6 +9391,11 @@ function openAndScrollToUnlockedItem(itemId){
 }
 
 function filterSections(indexes, navKey){
+  // "Eğitimler" bölümü açıksa, diğer nav bağlantılarından biri seçildiğinde
+  // önce onu kapatıyoruz — aksi halde Kader Matrisi sonucu hesaplanıp arkada
+  // gösterilse bile #egitimlerPage görünür kalmaya devam ederdi.
+  const egitimlerPageEl = document.getElementById('egitimlerPage');
+  if (egitimlerPageEl) egitimlerPageEl.style.display = 'none';
   const results = document.getElementById('resultsPage');
   if(!results || results.style.display === 'none'){
     const dEl = document.getElementById('d'), mEl = document.getElementById('m'), yEl = document.getElementById('y');
@@ -9665,6 +9747,24 @@ function showLandingPage(){
   const results = document.getElementById('resultsPage');
   if(results) results.style.display = 'none';
   if(landing) landing.style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+// "Eğitimler" (Trainings) bölümünü gösterir; ana matris/hesaplama akışına
+// hiç dokunmaz — sadece landingPage/resultsPage'i gizleyip #egitimlerPage'i
+// gösterir. Nav'daki diğer bağlantılara (filterSections() üzerinden) tekrar
+// tıklandığında filterSections() zaten bu sayfayı kapatır (bkz. o fonksiyon).
+function showEgitimlerPage(){
+  const landing = document.getElementById('landingPage');
+  const results = document.getElementById('resultsPage');
+  const egitimler = document.getElementById('egitimlerPage');
+  if(landing) landing.style.display = 'none';
+  if(results) results.style.display = 'none';
+  if(egitimler) egitimler.style.display = 'block';
+  document.querySelectorAll('.top-nav .nav-item[data-i18n]').forEach(el => {
+    el.classList.toggle('active', el.getAttribute('data-i18n') === 'nav_trainings');
+  });
+  document.querySelectorAll('.top-nav .nav-links.open').forEach(l => l.classList.remove('open'));
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
@@ -23274,7 +23374,7 @@ async function syncPurchasesFromSupabase() {
 }
 
 function renderAuthUI() {
-  ['1', '2'].forEach(suffix => {
+  ['1', '2', '3'].forEach(suffix => {
     const btn = document.getElementById('navAccountBtn' + suffix);
     const label = document.getElementById('navAccountLabel' + suffix);
     const avatar = document.getElementById('navAccountAvatar' + suffix);
