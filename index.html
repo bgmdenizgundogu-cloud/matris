@@ -155,7 +155,20 @@
   .nav-account-menu .signout-btn{ color:#b8322c; font-weight:700; border-top:1px solid #e6d9bd; margin-top:4px; }
   @media (max-width:860px){
     .nav-hamburger{ display:inline-flex; }
-    .top-nav .nav-links{ display:none; position:fixed; margin-top:0; background:var(--gold-deep); border-radius:16px; padding:10px; flex-direction:column; align-items:stretch; gap:2px; box-shadow:0 14px 34px rgba(0,0,0,.28); z-index:9500; }
+    /* ÖNEMLİ (mobil nav düzeltmesi): panel eskiden position:fixed idi ve
+       konumu JS ile (getBoundingClientRect + inline style.top/left/width)
+       hesaplanıyordu. Bazı mobil tarayıcılarda (özellikle iOS Safari) hem
+       "position:fixed" bir "sticky"/"overflow:auto" atanın İÇİNDEYKEN hem de
+       adres çubuğu kayarken/gizlenirken JS'in önceden hesapladığı pikseller
+       geçersiz kalabiliyor, panel ekran dışında/yanlış konumda render
+       olabiliyor — menü "açık" (class .open, display:flex) olsa bile hiçbir
+       şey görünmüyormuş gibi davranıyordu. Çözüm: panel artık .top-nav'a
+       (zaten position:relative) göre position:absolute; top:100% ile SAF
+       CSS'le konumlanıyor, JS'in hesapladığı hiçbir pikseline bağlı değil.
+       max-height + overflow-y:auto: kısa boylu/az dikey alanlı ekranlarda
+       (ör. yatay mod) son öğe (Eğitimler) ekran dışına taşıp görünmez
+       olmasın diye — panel gerekirse kendi içinde kayar. */
+    .top-nav .nav-links{ display:none; position:absolute; top:calc(100% + 8px); left:0; right:0; margin-top:0; background:var(--gold-deep); border-radius:16px; padding:10px; flex-direction:column; align-items:stretch; gap:2px; box-shadow:0 14px 34px rgba(0,0,0,.28); z-index:9500; max-height:calc(100vh - 90px); overflow-y:auto; }
     .top-nav .nav-links.open{ display:flex; }
     .top-nav .nav-links .nav-item{ padding:11px 12px; border-radius:8px; }
     .top-nav .nav-links .nav-item:active,.top-nav .nav-links .nav-item.active{ background:rgba(255,250,240,.14); }
@@ -23129,21 +23142,17 @@ function toggleMobileNav(linksId, btnEl) {
   if (!links) return;
   const isOpen = links.classList.toggle('open');
   if (btnEl) btnEl.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  // Panelin konumu artık saf CSS ile belirleniyor (bkz. .top-nav .nav-links
+  // kuralı: position:absolute; top:100%) — bu yüzden burada JS ile piksel
+  // hesaplayıp inline style.top/left/width YAZMIYORUZ; öyle bir inline
+  // style, CSS kuralından daha yüksek özgüllükte olduğu için onu geçersiz
+  // kılar ve panel yanlış/eski bir konumda kalabilirdi.
   const nav = links.closest('.top-nav');
   // .top-nav'ın dar ekranlarda kendi üzerinde taşıdığı overflow-x:auto,
-  // içindeki position:fixed açılır menüyü bazı mobil tarayıcılarda
-  // kırpabildiği/yanlış konumlandırabildiği için (bkz. yukarıdaki CSS
-  // yorumu), menü açık olduğu sürece bunu geçici olarak devre dışı
-  // bırakıyoruz.
+  // içindeki açılır menüyü bazı mobil tarayıcılarda kırpabildiği için
+  // (bkz. yukarıdaki CSS yorumu), menü açık olduğu sürece bunu geçici
+  // olarak devre dışı bırakıyoruz.
   if (nav) nav.classList.toggle('nav-menu-open', isOpen);
-  if (isOpen) {
-    if (nav) {
-      const rect = nav.getBoundingClientRect();
-      links.style.top = (rect.bottom + 8) + 'px';
-      links.style.left = rect.left + 'px';
-      links.style.width = rect.width + 'px';
-    }
-  }
 }
 function toggleAccountMenu(menuId) {
   const menu = document.getElementById(menuId);
