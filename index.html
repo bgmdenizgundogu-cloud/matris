@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#12365e">
-<meta name="description" content="Destiny Chart Matrix — Doğum tarihinizden kişisel Analiz Matrisinizi ücretsiz hesaplayın.">
+<meta name="description" content="Doğum tarihinizle kader matrisinizi hesaplayın. Matrisinizdeki sayıların ve alanların nasıl yorumlandığını Türkçe ve İngilizce rehberlerle keşfedin.">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -13,18 +13,24 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="assets/app-icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/icon-192.png">
-<title id="pageTitle">Destiny Chart Matrix — Kader Matrisi Hesaplayıcı</title>
-<meta property="og:title" content="Destiny Chart Matrix — Kader Matrisi Hesaplayıcı">
-<meta property="og:description" content="Doğum tarihinizden kişisel Analiz Matrisinizi ücretsiz hesaplayın.">
+<title id="pageTitle">Kader Matrisi Hesaplama | Destiny Chart Matrix</title>
+<meta property="og:title" content="Kader Matrisi Hesaplama | Destiny Chart Matrix">
+<meta property="og:description" content="Doğum tarihinizle kader matrisinizi hesaplayın. Matrisinizdeki sayıların ve alanların nasıl yorumlandığını Türkçe ve İngilizce rehberlerle keşfedin.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://destinychartmatrix.com/">
+<meta property="og:url" content="https://www.destinychartmatrix.com/">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Destiny Chart Matrix — Kader Matrisi Hesaplayıcı">
-<meta name="twitter:description" content="Doğum tarihinizden kişisel Analiz Matrisinizi ücretsiz hesaplayın.">
-<link rel="canonical" href="https://destinychartmatrix.com/">
+<meta name="twitter:title" content="Kader Matrisi Hesaplama | Destiny Chart Matrix">
+<meta name="twitter:description" content="Doğum tarihinizle kader matrisinizi hesaplayın. Matrisinizdeki sayıların ve alanların nasıl yorumlandığını Türkçe ve İngilizce rehberlerle keşfedin.">
+<link rel="canonical" href="https://www.destinychartmatrix.com/">
 <script src="https://cdn.jsdelivr.net/npm/dodopayments-checkout@latest/dist/index.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
+  .blog-preview{margin:32px 0;padding:26px;background:#fff;border:1px solid #c7dceb;border-radius:14px;font-family:Arial,sans-serif;line-height:1.7;}
+  .blog-preview h2{font-family:Georgia,serif;font-size:1.6rem;margin:0 0 16px;}
+  .blog-preview h3{font-size:1.1rem;margin:0 0 10px;}
+  .blog-preview p{color:#4d6d8f;}
+  .blog-preview a{color:#205f98;text-underline-offset:4px;}
+  .blog-preview a:focus-visible{outline:3px solid #2f6fae;outline-offset:4px;}
   :root{
     --ink:#122a4d; --muted:#4d6d8f; --bg:#e7f2fb; --panel:#ffffff;
     --gold:#2f6fae; --gold-light:#a9cfe9; --gold-deep:#12365e;
@@ -638,6 +644,7 @@
       <span class="nav-item" data-i18n="nav_yearly" style="cursor:pointer;" onclick="filterSections(['mt13','mt14','mt15','mt16','mt17','mt23'], 'nav_yearly')">DÖNEMSEL ANALİZ</span>
       <span class="nav-item" data-i18n="nav_extra" style="cursor:pointer;" onclick="filterSections(['mt12','mt22','mt23'], 'nav_extra')">EK HESAPLAMALAR</span>
       <span class="nav-item" data-i18n="nav_trainings" style="cursor:pointer;" onclick="showEgitimlerPage()">EĞİTİMLER</span>
+      <a class="nav-item" style="cursor:pointer;" href="/blog/" data-i18n="nav_blog" data-i18n-href="blog_href">BLOG</a>
     </div>
     <button class="lang-toggle-btn" onclick="toggleLanguage()" title="Switch to English">EN</button>
     <button class="install-btn" type="button">Uygulamayı Yükle</button>
@@ -700,6 +707,7 @@
       </ul>
     </div>
   </div>
+<section class="blog-preview" aria-labelledby="blogPreviewHeading"><h2 id="blogPreviewHeading" data-i18n="blog_heading">Kader Matrisini Tanıyın</h2><h3><a href="/blog/kader-matrisi-nedir.html" data-i18n="blog_title" data-i18n-href="blog_article_href">Kader Matrisi Nedir?</a></h3><p data-i18n="blog_desc">Kader matrisi nedir? Doğum tarihine dayanan 22 enerji sistemini, matrisin yaşam alanlarını ve yorumlamaya nasıl başlayacağınızı keşfedin.</p><a href="/blog/kader-matrisi-nedir.html" data-i18n="blog_read" data-i18n-href="blog_article_href">Yazıyı oku →</a></section>
 </div>
 
 <div id="resultsPage" style="display:none;">
@@ -716,6 +724,7 @@
       <span class="nav-item" data-i18n="nav_yearly" style="cursor:pointer;" onclick="filterSections(['mt13','mt14','mt15','mt16','mt17','mt23'], 'nav_yearly')">DÖNEMSEL ANALİZ</span>
       <span class="nav-item" data-i18n="nav_extra" style="cursor:pointer;" onclick="filterSections(['mt12','mt22','mt23'], 'nav_extra')">EK HESAPLAMALAR</span>
       <span class="nav-item" data-i18n="nav_trainings" style="cursor:pointer;" onclick="showEgitimlerPage()">EĞİTİMLER</span>
+      <a class="nav-item" style="cursor:pointer;" href="/blog/" data-i18n="nav_blog" data-i18n-href="blog_href">BLOG</a>
     </div>
     <button class="lang-toggle-btn" onclick="toggleLanguage()" title="Switch to English">EN</button>
     <button class="install-btn" type="button">Uygulamayı Yükle</button>
@@ -989,6 +998,7 @@
       <span class="nav-item" data-i18n="nav_yearly" style="cursor:pointer;" onclick="filterSections(['mt13','mt14','mt15','mt16','mt17','mt23'], 'nav_yearly')">DÖNEMSEL ANALİZ</span>
       <span class="nav-item" data-i18n="nav_extra" style="cursor:pointer;" onclick="filterSections(['mt12','mt22','mt23'], 'nav_extra')">EK HESAPLAMALAR</span>
       <span class="nav-item" data-i18n="nav_trainings" style="cursor:pointer;" onclick="showEgitimlerPage()">EĞİTİMLER</span>
+      <a class="nav-item" style="cursor:pointer;" href="/blog/" data-i18n="nav_blog" data-i18n-href="blog_href">BLOG</a>
     </div>
     <button class="lang-toggle-btn" onclick="toggleLanguage()" title="Switch to English">EN</button>
     <button class="install-btn" type="button">Uygulamayı Yükle</button>
@@ -1077,6 +1087,9 @@
 //    açılır — böylece yabancı ziyaretçiler siteyi doğrudan kendi
 //    dillerinde (İngilizce) görür, Türkçe ile uğraşmaz.
 function detectInitialLanguage() {
+  // Article links explicitly select the calculator language.
+  const requestedLang = new URLSearchParams(window.location.search).get('lang');
+  if (requestedLang === 'tr' || requestedLang === 'en') return requestedLang;
   try {
     const saved = localStorage.getItem('kaderMatrisi_lang');
     if (saved === 'tr' || saved === 'en') return saved;
@@ -1105,6 +1118,12 @@ function mergeLangObj(trObj, enObj) {
 
 function setLanguage(lang) {
   currentLang = lang;
+  // Keep an explicit language link consistent after a manual switch.
+  const languageUrl = new URL(window.location.href);
+  if (languageUrl.searchParams.has('lang')) {
+    languageUrl.searchParams.set('lang', lang);
+    history.replaceState(history.state, '', languageUrl);
+  }
   try { localStorage.setItem('kaderMatrisi_lang', lang); } catch (e) { /* no-op */ }
   MAIN_TALENT_DATA = (lang === 'en') ? mergeLangObj(MAIN_TALENT_DATA_TR, MAIN_TALENT_DATA_EN) : MAIN_TALENT_DATA_TR;
   DIVINE_GIFT_INTRO = (lang === 'en' && DIVINE_GIFT_INTRO_EN) ? DIVINE_GIFT_INTRO_EN : DIVINE_GIFT_INTRO_TR;
@@ -1318,6 +1337,13 @@ function toggleLanguage() {
 }
 
 const UI_STRINGS = {
+  nav_blog: { tr: 'BLOG', en: 'BLOG' },
+  blog_href: { tr: '/blog/', en: '/en/blog/' },
+  blog_article_href: { tr: '/blog/kader-matrisi-nedir.html', en: '/en/blog/what-is-the-destiny-matrix.html' },
+  blog_heading: { tr: 'Kader Matrisini Tanıyın', en: 'Explore the Destiny Matrix' },
+  blog_title: { tr: 'Kader Matrisi Nedir?', en: 'What Is the Destiny Matrix?' },
+  blog_desc: { tr: 'Kader matrisi nedir? Doğum tarihine dayanan 22 enerji sistemini, matrisin yaşam alanlarını ve yorumlamaya nasıl başlayacağınızı keşfedin.', en: 'What is the Destiny Matrix? Explore the birth-date-based system of 22 energies, the areas of your chart and how to begin interpreting your matrix.' },
+  blog_read: { tr: 'Yazıyı oku →', en: 'Read the article →' },
   nav_home: { tr: 'KADER MATRİSİ', en: 'DESTINY MATRIX' },
   nav_finance: { tr: 'FİNANS', en: 'FINANCE' },
   nav_love: { tr: 'İLİŞKİ ANALİZİ', en: 'RELATIONSHIP ANALYSIS' },
@@ -1392,7 +1418,7 @@ const UI_STRINGS = {
   age_label_55: { tr: '55 yaş', en: 'Age 55' },
   age_label_65: { tr: '65 yaş', en: 'Age 65' },
   age_label_75: { tr: '75 yaş', en: 'Age 75' },
-  page_title: { tr: 'Destiny Chart Matrix — Kader Matrisi Hesaplayıcı', en: 'Destiny Chart Matrix — Free Destiny Matrix Calculator' },
+  page_title: { tr: 'Kader Matrisi Hesaplama | Destiny Chart Matrix', en: 'Destiny Matrix Calculator | Destiny Chart Matrix' },
   img_alt_preview: { tr: 'Analiz Matrisi önizleme', en: 'Analysis Matrix preview' },
   svg_aria_template: { tr: 'Sabit Analiz Matrisi şablonu', en: 'Fixed Analysis Matrix template' },
   hero_calc: { tr: 'HESAPLA', en: 'CALCULATE' },
@@ -2234,6 +2260,13 @@ function applyStaticTranslations() {
   const titleEntry = UI_STRINGS['page_title'];
   if (titleEntry) document.title = (currentLang === 'en') ? titleEntry.en : titleEntry.tr;
   document.documentElement.lang = (currentLang === 'en') ? 'en' : 'tr';
+  document.querySelectorAll('.lang-toggle-btn').forEach(function(button){
+    button.textContent = currentLang === 'en' ? 'TR' : 'EN';
+    button.title = currentLang === 'en' ? 'Türkçeye geç' : 'Switch to English';
+  });
+  const seoDescription = currentLang === 'en' ? "Calculate your Destiny Matrix using your date of birth. Explore the numbers and areas of your chart with our Turkish and English guides." : "Doğum tarihinizle kader matrisinizi hesaplayın. Matrisinizdeki sayıların ve alanların nasıl yorumlandığını Türkçe ve İngilizce rehberlerle keşfedin.";
+  document.querySelectorAll('meta[name="description"],meta[property="og:description"],meta[name="twitter:description"]').forEach(function(meta){meta.content=seoDescription;});
+  document.querySelectorAll('meta[property="og:title"],meta[name="twitter:title"]').forEach(function(meta){meta.content=document.title;});
 }
 
 // tt(key): looks up a UI_STRINGS entry for inline headings/titles used inside
