@@ -1,5 +1,6 @@
 // /api/dodo-webhook.js
 import { Webhook } from 'standardwebhooks';
+import { trainingWebhook } from '../lib/training.js';
 
 export const config = {
   api: {
@@ -48,6 +49,7 @@ export default async function handler(req, res) {
 
   try {
     const eventType = payload.type;
+    if (await trainingWebhook(payload)) return res.status(200).json({ received: true });
     const metadata = (payload.data && payload.data.metadata) || payload.metadata || {};
     const dodoProductId =
       (payload.data && payload.data.product_id) ||
