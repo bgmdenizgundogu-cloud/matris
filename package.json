@@ -1,10 +1,16 @@
 {
   "name": "destiny-chart-matrix",
   "private": true,
+  "scripts": {
+    "test": "node --test tests/*.test.js && node tests/training-sql.mjs"
+  },
   "version": "1.0.0",
   "type": "module",
   "description": "Vercel Serverless Functions for Dodo Payments checkout + webhook. The static site (index.html and friends) is unaffected by this file.",
   "dependencies": {
     "standardwebhooks": "^1.0.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8"
   }
 }
