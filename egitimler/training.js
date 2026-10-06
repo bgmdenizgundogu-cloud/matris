@@ -1,7 +1,7 @@
 (() => {
   const $ = id => document.getElementById(id);
   let lang = new URLSearchParams(location.search).get('lang') === 'en' ? 'en' : 'tr';
-  let client, session, data, generation = 0, poll;
+  let client, session, data, generation = 0, poll, currentLessonId;
   const t = (tr,en) => lang === 'en' ? en : tr;
   const status = (tr,en) => $('status').textContent = t(tr,en);
   function translate() {
@@ -15,7 +15,30 @@
     if (!response.ok) throw new Error(String(response.status));
     return response.json();
   }
-  function clearVideo() { generation++; $('video').pause(); $('video').removeAttribute('src'); $('video').load(); $('player').hidden=true; }
+  function clearVideo() { generation++; currentLessonId=null; $('video').pause(); $('video').removeAttribute('src'); $('video').load(); $('player').hidden=true; }
+  async function playLesson(lesson, autoplay=false) {
+    const ticket=++generation;
+    $('video').pause(); currentLessonId=null;
+    try {
+      const playback=await api(`/api/training?lesson=${encodeURIComponent(lesson.id)}`);
+      if(ticket!==generation)return;
+      currentLessonId=lesson.id;
+      $('now-playing').textContent=lesson[`title_${lang}`];
+      $('video').src=playback.url; $('player').hidden=false;
+      if(autoplay) {
+        try { await $('video').play(); }
+        catch { if(ticket===generation)status('Devam etmek için oynat düğmesine basın.','Press play to continue.'); }
+      } else $('player').scrollIntoView({behavior:'smooth',block:'start'});
+    } catch {
+      if(ticket!==generation)return;
+      clearVideo();status('Videoya erişilemiyor. Girişinizi ve satın alma durumunuzu kontrol edin.','Unable to access video. Check your sign-in and purchase status.');
+    }
+  }
+  $('video').addEventListener('ended',()=>{
+    if(!session || !data?.enrolled || !currentLessonId)return;
+    const index=data.lessons.findIndex(lesson=>lesson.id===currentLessonId);
+    if(index>=0 && index+1<data.lessons.length)playLesson(data.lessons[index+1],true);
+  });
   function render() {
     $('account').hidden=!!session || !client;
     $('logout').hidden=!session;
@@ -28,14 +51,8 @@
       const li=document.createElement('li'), button=document.createElement('button');
       button.textContent=lesson[`title_${lang}`]; button.disabled=!data.enrolled;
       button.addEventListener('click',async()=>{
-        const ticket=++generation; button.disabled=true;
-        try {
-          const playback=await api(`/api/training?lesson=${encodeURIComponent(lesson.id)}`);
-          if(ticket!==generation)return;
-          $('now-playing').textContent=lesson[`title_${lang}`];
-          $('video').src=playback.url; $('player').hidden=false;
-          $('player').scrollIntoView({behavior:'smooth',block:'start'});
-        } catch {clearVideo();status('Videoya erişilemiyor. Girişinizi ve satın alma durumunuzu kontrol edin.','Unable to access video. Check your sign-in and purchase status.');}
+        button.disabled=true;
+        try {await playLesson(lesson);}
         finally {button.disabled=!data.enrolled;}
       });li.append(button);$('lessons').append(li);
     }
