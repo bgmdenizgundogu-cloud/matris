@@ -19,7 +19,9 @@
   function render() {
     $('account').hidden=!!session || !client;
     $('logout').hidden=!session;
-    $('buy').hidden=!session || data.enrolled || !data.salesEnabled;
+    $('buy').hidden=data.enrolled || !data.salesEnabled || !client;
+    $('buy').textContent=session?t('Satın al','Buy course'):t('Giriş yap ve satın al','Sign in to purchase');
+    $('lessons-title').textContent=data.enrolled?t('Eğitimim','My course'):t('Ders içeriği','Course curriculum');
     $('refresh').hidden=!session;
     $('lessons').replaceChildren();
     for (const lesson of data.lessons) {
@@ -57,6 +59,7 @@
   $('refresh').onclick=()=>refresh().catch(()=>status('Kontrol yapılamadı. Tekrar deneyin.','Unable to check access. Try again.'));
   $('language').onclick=()=>{lang=lang==='tr'?'en':'tr';translate();if(data)render();};
   $('buy').onclick=async()=>{
+    if(!session){$('account').scrollIntoView({behavior:'smooth',block:'start'});$('email').focus({preventScroll:true});return;}
     $('buy').disabled=true;
     try {const result=await api('/api/training-checkout',{method:'POST'});if(result.enrolled)await refresh();else location.assign(result.checkoutUrl);}
     catch{status('Ödeme sayfası açılamadı. Lütfen tekrar deneyin.','Could not open checkout. Please try again.');}
