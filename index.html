@@ -22,7 +22,25 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kader Matrisi Hesaplama | Destiny Chart Matrix">
 <meta name="twitter:description" content="Doğum tarihinizle kader matrisinizi hesaplayın. Matrisinizdeki sayıların ve alanların nasıl yorumlandığını Türkçe ve İngilizce rehberlerle keşfedin.">
-<link rel="canonical" href="https://www.destinychartmatrix.com/">
+<link rel="alternate" hreflang="tr" href="https://www.destinychartmatrix.com/">
+<link rel="alternate" hreflang="en" href="https://www.destinychartmatrix.com/?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://www.destinychartmatrix.com/">
+<script>
+// The calculator renders its language with JavaScript. Create one canonical
+// for that language before loading third-party scripts; never point EN at TR.
+function updateLanguageSeo(lang) {
+  const url = 'https://www.destinychartmatrix.com/' + (lang === 'en' ? '?lang=en' : '');
+  let canonical = document.querySelector('link[rel="canonical"]');
+  if (!canonical) {
+    canonical = document.createElement('link');
+    canonical.rel = 'canonical';
+    document.head.appendChild(canonical);
+  }
+  canonical.href = url;
+  document.querySelector('meta[property="og:url"]').content = url;
+}
+updateLanguageSeo(new URLSearchParams(window.location.search).get('lang'));
+</script>
 <script src="https://cdn.jsdelivr.net/npm/dodopayments-checkout@latest/dist/index.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
@@ -1088,28 +1106,11 @@
 // şey bozulmaz). setLanguage() çağrıldığında ilgili değişkenler
 // güncellenir ve varsa hesapla() yeniden çalıştırılır.
 // ============================================================
-// Sayfa ilk açıldığında hangi dilde başlayacağını belirler:
-// 1) Ziyaretçi daha önce elle dil değiştirdiyse (localStorage'da kayıtlıysa),
-//    o tercih kullanılır — her ziyarette tekrar sormayız.
-// 2) Kayıtlı tercih yoksa, tarayıcının dil ayarına bakılır: Türkçe ise
-//    Türkçe, DEĞİLSE (İngilizce, Almanca, ne olursa olsun) İngilizce
-//    açılır — böylece yabancı ziyaretçiler siteyi doğrudan kendi
-//    dillerinde (İngilizce) görür, Türkçe ile uğraşmaz.
+// Each indexable URL has a stable language, independent of browser/storage.
+// / and ?lang=tr are Turkish; ?lang=en is English.
 function detectInitialLanguage() {
-  // Article links explicitly select the calculator language.
   const requestedLang = new URLSearchParams(window.location.search).get('lang');
-  if (requestedLang === 'tr' || requestedLang === 'en') return requestedLang;
-  try {
-    const saved = localStorage.getItem('kaderMatrisi_lang');
-    if (saved === 'tr' || saved === 'en') return saved;
-  } catch (e) { /* no-op */ }
-  try {
-    const browserLangs = navigator.languages || [navigator.language || navigator.userLanguage || 'tr'];
-    const primary = (browserLangs[0] || 'tr').toLowerCase();
-    return primary.startsWith('tr') ? 'tr' : 'en';
-  } catch (e) {
-    return 'tr';
-  }
+  return requestedLang === 'en' ? 'en' : 'tr';
 }
 let currentLang = detectInitialLanguage();
 
@@ -1127,12 +1128,12 @@ function mergeLangObj(trObj, enObj) {
 
 function setLanguage(lang) {
   currentLang = lang;
-  // Keep an explicit language link consistent after a manual switch.
+  // Keep the address shareable, preserving checkout parameters and fragments.
   const languageUrl = new URL(window.location.href);
-  if (languageUrl.searchParams.has('lang')) {
-    languageUrl.searchParams.set('lang', lang);
-    history.replaceState(history.state, '', languageUrl);
-  }
+  if (lang === 'en') languageUrl.searchParams.set('lang', 'en');
+  else languageUrl.searchParams.delete('lang');
+  history.replaceState(history.state, '', languageUrl);
+  updateLanguageSeo(lang);
   try { localStorage.setItem('kaderMatrisi_lang', lang); } catch (e) { /* no-op */ }
   MAIN_TALENT_DATA = (lang === 'en') ? mergeLangObj(MAIN_TALENT_DATA_TR, MAIN_TALENT_DATA_EN) : MAIN_TALENT_DATA_TR;
   DIVINE_GIFT_INTRO = (lang === 'en' && DIVINE_GIFT_INTRO_EN) ? DIVINE_GIFT_INTRO_EN : DIVINE_GIFT_INTRO_TR;
