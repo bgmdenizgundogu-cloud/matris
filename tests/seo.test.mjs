@@ -74,3 +74,18 @@ test('all inline classic scripts parse', () => {
     new vm.Script(source);
   }
 });
+
+test('HTML and local data scripts stay below the Googlebot fetch limit', () => {
+  assert.ok(Buffer.byteLength(html) < 1_800_000, 'Keep HTML below 2 MB with headroom');
+  const files = [...html.matchAll(/<script src="(\/assets\/matrix-data-[^"]+)"><\/script>/g)].map(m => m[1]);
+  assert.ok(files.length > 0);
+  const context = vm.createContext({});
+  for (const file of files) {
+    const source = readFileSync(new URL('..' + file, import.meta.url), 'utf8');
+    assert.ok(Buffer.byteLength(source) < 1_800_000, file);
+    vm.runInContext(source, context, { filename: file });
+  }
+  assert.equal(vm.runInContext('UI_STRINGS.page_title.en', context), 'Destiny Matrix Calculator | Destiny Chart Matrix');
+  assert.equal(vm.runInContext('Object.keys(MAIN_TALENT_DATA_TR).length', context), 22);
+  assert.equal(vm.runInContext('Object.keys(MAIN_TALENT_DATA_EN).length', context), 22);
+});
