@@ -34,3 +34,9 @@ The project and its educational resources are under ongoing development, with ne
 Run regression checks with `node --test tests/seo.test.mjs` (Node.js 18+).
 
 After deployment, use Search Console's live URL test for `/`, `/?lang=en` and the Turkish blog article. Verify the rendered language/canonical before requesting indexing. The Turkish `?lang=tr` alias may appropriately remain an alternate page. Successful technical checks do not guarantee indexing or a particular search position.
+
+The HTML is kept below Google's 2 MB uncompressed crawl limit. Large literal
+interpretation tables live in content-hashed `assets/matrix-data-*.js` files,
+each below 900 KB, loaded in order before the application. Keep these script
+references synchronous: the application expects the data to be available at
+initialization. Data files must be deployed before or alongside index.html.
